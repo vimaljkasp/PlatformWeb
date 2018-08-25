@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="MobileNumber" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HomePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ItemName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductSiteMappings" Relationship="Self.fk_ProductSiteMapping_Item" FromRole="Item" ToRole="ProductSiteMapping" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="ProductDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ProductQuantity" Type="Int32" />
+    <Property Name="ProductPrice" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductSiteMappings" Relationship="Self.fk_ProductSiteMapping_Product" FromRole="Product" ToRole="ProductSiteMapping" />
+  </EntityType>
+  <EntityType Name="ProductOrderDetail">
+    <Key>
+      <PropertyRef Name="ProductOrderDetailId" />
+    </Key>
+    <Property Name="ProductOrderDetailId" Type="Int64" Nullable="false" />
+    <Property Name="OrderId" Type="Int64" />
+    <Property Name="ProductId" Type="Int64" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="UnitPrice" Type="Int64" />
+    <Property Name="Total" Type="Int64" />
+    <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ProductSiteMapping">
+    <Key>
+      <PropertyRef Name="ProductMappingId" />
+    </Key>
+    <Property Name="ProductMappingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SiteId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Self.fk_ProductSiteMapping_Item" FromRole="ProductSiteMapping" ToRole="Item" />
+    <NavigationProperty Name="Product" Relationship="Self.fk_ProductSiteMapping_Product" FromRole="ProductSiteMapping" ToRole="Product" />
+    <NavigationProperty Name="ProductOrders" Relationship="Self.fk_Order_ProductSiteMapping" FromRole="ProductSiteMapping" ToRole="ProductOrder" />
+    <NavigationProperty Name="ProductStocks" Relationship="Self.fk_ProcutStock_ProductSiteMapping" FromRole="ProductSiteMapping" ToRole="ProductStock" />
+    <NavigationProperty Name="Site" Relationship="Self.fk_ProductSiteMapping_Site" FromRole="ProductSiteMapping" ToRole="Site" />
+    <NavigationProperty Name="Sales" Relationship="Self.fk_Sales_ProductSiteMapping" FromRole="ProductSiteMapping" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="ProductStock">
+    <Key>
+      <PropertyRef Name="StockDate" />
+      <PropertyRef Name="StockProductId" />
+    </Key>
+    <Property Name="StockId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StockDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StockProductId" Type="Int64" Nullable="false" />
+    <Property Name="StockCreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="StockCreatedDtm" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="StockQuantiy" Type="Int32" Nullable="false" />
+    <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductSiteMapping" Relationship="Self.fk_ProcutStock_ProductSiteMapping" FromRole="ProductStock" ToRole="ProductSiteMapping" />
+  </EntityType>
+  <EntityType Name="Sale">
+    <Key>
+      <PropertyRef Name="SalesDate" />
+      <PropertyRef Name="SalesProductId" />
+    </Key>
+    <Property Name="SalesId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalesDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="SalesProductId" Type="Int64" Nullable="false" />
+    <Property Name="SalesQuantity" Type="Int32" Nullable="false" />
+    <Property Name="SalesPrice" Type="Int64" Nullable="false" />
+    <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductSiteMapping" Relationship="Self.fk_Sales_ProductSiteMapping" FromRole="Sales" ToRole="ProductSiteMapping" />
+  </EntityType>
+  <EntityType Name="Site">
+    <Key>
+      <PropertyRef Name="SiteId" />
+    </Key>
+    <Property Name="SiteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SiteCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="SiteName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SiteAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SiteCity" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SiteState" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SiteZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SiteMobileNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductSiteMappings" Relationship="Self.fk_ProductSiteMapping_Site" FromRole="Site" ToRole="ProductSiteMapping" />
+  </EntityType>
+  <EntityType Name="CustomerPaymentTransaction">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="CustomerId" />
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="PaymentCrAmount" />
+      <PropertyRef Name="PaymentDrAmount" />
+      <PropertyRef Name="PaymentDate" />
+      <PropertyRef Name="PaymentReceivedBy" />
+    </Key>
+    <Property Name="TransactionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="PaymentCrAmount" Type="Int64" Nullable="false" />
+    <Property Name="PaymentDrAmount" Type="Int64" Nullable="false" />
+    <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PaymentReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CustomerWallet">
+    <Key>
+      <PropertyRef Name="WalletId" />
+      <PropertyRef Name="CustomerId" />
+      <PropertyRef Name="WalletBalance" />
+      <PropertyRef Name="AmountDueDate" />
+    </Key>
+    <Property Name="WalletId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="WalletBalance" Type="Int64" Nullable="false" />
+    <Property Name="AmountDueDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="Password" />
+      <PropertyRef Name="Address" />
+      <PropertyRef Name="City" />
+      <PropertyRef Name="PostalCode" />
+      <PropertyRef Name="MobileNumber" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="EmployeeRole">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="ModuleId" />
+      <PropertyRef Name="ModuleName" />
+    </Key>
+    <Property Name="ModuleId" Type="Int32" Nullable="false" />
+    <Property Name="ModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="ProductOrder">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="OrderDate" />
+      <PropertyRef Name="OrderProductId" />
+      <PropertyRef Name="OrderPurchaseDtm" />
+      <PropertyRef Name="OrderQuantity" />
+      <PropertyRef Name="OrderPrice" />
+      <PropertyRef Name="OrderStatus" />
+      <PropertyRef Name="OrderDeilveredDate" />
+      <PropertyRef Name="OrderDeilveredBy" />
+      <PropertyRef Name="OrderPaymentMode" />
+    </Key>
+    <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="OrderProductId" Type="Int64" Nullable="false" />
+    <Property Name="OrderPurchaseDtm" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="OrderQuantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderPrice" Type="Int64" Nullable="false" />
+    <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+    <Property Name="OrderDeilveredDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="OrderDeilveredBy" Type="Int32" Nullable="false" />
+    <Property Name="OrderCustomerId" Type="Int32" />
+    <Property Name="OrderPaymentMode" Type="Int32" Nullable="false" />
+    <Property Name="OrderComments" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="OrderAmount" Type="Int64" />
+    <Property Name="OrderTax" Type="Int64" />
+    <Property Name="TotalAmount" Type="Int64" />
+    <Property Name="VehicleNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="DriverName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="DriverNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="JCBDriverNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="RoyaltyNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="OrderPriority" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductSiteMapping" Relationship="Self.fk_Order_ProductSiteMapping" FromRole="ProductOrder" ToRole="ProductSiteMapping" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RoleName" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="RoleModule">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="SecurityId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="SecurityId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SiteConfiguration">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="KeyData" />
+      <PropertyRef Name="KeyName" />
+      <PropertyRef Name="DataVal" />
+      <PropertyRef Name="DefaultVal" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KeyData" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KeyName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DataVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DefaultVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="fk_ProductSiteMapping_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ItemId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductOrder">
+        <PropertyRef Name="OrderProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProcutStock_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="StockProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Site">
+    <End Role="Site" Type="Self.Site" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Site">
+        <PropertyRef Name="SiteId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="SiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Sales_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="SalesProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PlatformDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductOrderDetails" EntityType="Self.ProductOrderDetail" />
+    <EntitySet Name="ProductSiteMappings" EntityType="Self.ProductSiteMapping" />
+    <EntitySet Name="ProductStocks" EntityType="Self.ProductStock" />
+    <EntitySet Name="Sales" EntityType="Self.Sale" />
+    <EntitySet Name="Sites" EntityType="Self.Site" />
+    <EntitySet Name="CustomerPaymentTransactions" EntityType="Self.CustomerPaymentTransaction" />
+    <EntitySet Name="CustomerWallets" EntityType="Self.CustomerWallet" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="EmployeeRoles" EntityType="Self.EmployeeRole" />
+    <EntitySet Name="Modules" EntityType="Self.Module" />
+    <EntitySet Name="ProductOrders" EntityType="Self.ProductOrder" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="RoleModules" EntityType="Self.RoleModule" />
+    <EntitySet Name="SiteConfigurations" EntityType="Self.SiteConfiguration" />
+    <AssociationSet Name="fk_ProductSiteMapping_Item" Association="Self.fk_ProductSiteMapping_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMappings" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Product" Association="Self.fk_ProductSiteMapping_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMappings" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order_ProductSiteMapping" Association="Self.fk_Order_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMappings" />
+      <End Role="ProductOrder" EntitySet="ProductOrders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProcutStock_ProductSiteMapping" Association="Self.fk_ProcutStock_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMappings" />
+      <End Role="ProductStock" EntitySet="ProductStocks" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Site" Association="Self.fk_ProductSiteMapping_Site">
+      <End Role="Site" EntitySet="Sites" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMappings" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Sales_ProductSiteMapping" Association="Self.fk_Sales_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMappings" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

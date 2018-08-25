@@ -1,0 +1,5 @@
+F:\GitHub\PlatformWebHost\Platform.Utilities\bin\Release\Platform.Utilities.dll
+F:\GitHub\PlatformWebHost\Platform.Utilities\bin\Release\Platform.Utilities.pdb
+F:\GitHub\PlatformWebHost\Platform.Utilities\obj\Release\Platform.Utilities.csproj.CoreCompileInputs.cache
+F:\GitHub\PlatformWebHost\Platform.Utilities\obj\Release\Platform.Utilities.dll
+F:\GitHub\PlatformWebHost\Platform.Utilities\obj\Release\Platform.Utilities.pdb

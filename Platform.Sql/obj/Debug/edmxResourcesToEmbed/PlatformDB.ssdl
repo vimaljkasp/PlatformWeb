@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="MobileNumber" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="District" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="HomePhone" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.CustomerPaymentTransaction' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CustomerPaymentTransaction">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="CustomerId" />
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="PaymentCrAmount" />
+      <PropertyRef Name="PaymentDrAmount" />
+      <PropertyRef Name="PaymentDate" />
+      <PropertyRef Name="PaymentReceivedBy" />
+    </Key>
+    <Property Name="TransactionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="PaymentCrAmount" Type="bigint" Nullable="false" />
+    <Property Name="PaymentDrAmount" Type="bigint" Nullable="false" />
+    <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+    <Property Name="PaymentReceivedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.CustomerWallet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CustomerWallet">
+    <Key>
+      <PropertyRef Name="WalletId" />
+      <PropertyRef Name="CustomerId" />
+      <PropertyRef Name="WalletBalance" />
+      <PropertyRef Name="AmountDueDate" />
+    </Key>
+    <Property Name="WalletId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="WalletBalance" Type="bigint" Nullable="false" />
+    <Property Name="AmountDueDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="Password" />
+      <PropertyRef Name="Address" />
+      <PropertyRef Name="City" />
+      <PropertyRef Name="PostalCode" />
+      <PropertyRef Name="MobileNumber" />
+    </Key>
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.EmployeeRole' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="EmployeeRole">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="ItemDescription" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.Module' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="ModuleId" />
+      <PropertyRef Name="ModuleName" />
+    </Key>
+    <Property Name="ModuleId" Type="int" Nullable="false" />
+    <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="40" />
+    <Property Name="ProductDescription" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProductQuantity" Type="int" />
+    <Property Name="ProductPrice" Type="bigint" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.ProductOrder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ProductOrder">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="OrderDate" />
+      <PropertyRef Name="OrderProductId" />
+      <PropertyRef Name="OrderPurchaseDtm" />
+      <PropertyRef Name="OrderQuantity" />
+      <PropertyRef Name="OrderPrice" />
+      <PropertyRef Name="OrderStatus" />
+      <PropertyRef Name="OrderDeilveredDate" />
+      <PropertyRef Name="OrderDeilveredBy" />
+      <PropertyRef Name="OrderPaymentMode" />
+    </Key>
+    <Property Name="OrderId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDate" Type="date" Nullable="false" />
+    <Property Name="OrderProductId" Type="bigint" Nullable="false" />
+    <Property Name="OrderPurchaseDtm" Type="datetime" Nullable="false" />
+    <Property Name="OrderQuantity" Type="int" Nullable="false" />
+    <Property Name="OrderPrice" Type="bigint" Nullable="false" />
+    <Property Name="OrderStatus" Type="int" Nullable="false" />
+    <Property Name="OrderDeilveredDate" Type="datetime" Nullable="false" />
+    <Property Name="OrderDeilveredBy" Type="int" Nullable="false" />
+    <Property Name="OrderCustomerId" Type="int" />
+    <Property Name="OrderPaymentMode" Type="int" Nullable="false" />
+    <Property Name="OrderComments" Type="nvarchar" MaxLength="80" />
+    <Property Name="OrderAmount" Type="bigint" />
+    <Property Name="OrderTax" Type="bigint" />
+    <Property Name="TotalAmount" Type="bigint" />
+    <Property Name="VehicleNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="DriverName" Type="nvarchar" MaxLength="150" />
+    <Property Name="DriverNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="JCBDriverNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="RoyaltyNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="OrderPriority" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductOrderDetail">
+    <Key>
+      <PropertyRef Name="ProductOrderDetailId" />
+    </Key>
+    <Property Name="ProductOrderDetailId" Type="bigint" Nullable="false" />
+    <Property Name="OrderId" Type="bigint" />
+    <Property Name="ProductId" Type="bigint" />
+    <Property Name="Quantity" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="UnitPrice" Type="bigint" />
+    <Property Name="Total" Type="bigint" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductSiteMapping">
+    <Key>
+      <PropertyRef Name="ProductMappingId" />
+    </Key>
+    <Property Name="ProductMappingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SiteId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductStock">
+    <Key>
+      <PropertyRef Name="StockDate" />
+      <PropertyRef Name="StockProductId" />
+    </Key>
+    <Property Name="StockId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StockDate" Type="date" Nullable="false" />
+    <Property Name="StockProductId" Type="bigint" Nullable="false" />
+    <Property Name="StockCreatedBy" Type="int" Nullable="false" />
+    <Property Name="StockCreatedDtm" Type="datetime" Nullable="false" />
+    <Property Name="StockQuantiy" Type="int" Nullable="false" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.Role' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RoleName" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="RoleModule">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="SecurityId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="SecurityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="SalesDate" />
+      <PropertyRef Name="SalesProductId" />
+    </Key>
+    <Property Name="SalesId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalesDate" Type="date" Nullable="false" />
+    <Property Name="SalesProductId" Type="bigint" Nullable="false" />
+    <Property Name="SalesQuantity" Type="int" Nullable="false" />
+    <Property Name="SalesPrice" Type="bigint" Nullable="false" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Site">
+    <Key>
+      <PropertyRef Name="SiteId" />
+    </Key>
+    <Property Name="SiteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SiteCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="SiteName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="SiteAddress" Type="nvarchar" MaxLength="100" />
+    <Property Name="SiteCity" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="SiteState" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="SiteZipCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="SiteMobileNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.SiteConfigurations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SiteConfigurations">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="KeyData" />
+      <PropertyRef Name="KeyName" />
+      <PropertyRef Name="DataVal" />
+      <PropertyRef Name="DefaultVal" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KeyData" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="KeyName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="DataVal" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="DefaultVal" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="fk_Order_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductOrder">
+        <PropertyRef Name="OrderProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProcutStock_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="StockProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ItemId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Site">
+    <End Role="Site" Type="Self.Site" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Site">
+        <PropertyRef Name="SiteId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="SiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Sales_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="SalesProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PlatformDBModelStoreContainer">
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductOrderDetail" EntityType="Self.ProductOrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSiteMapping" EntityType="Self.ProductSiteMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductStock" EntityType="Self.ProductStock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Site" EntityType="Self.Site" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerPaymentTransaction" EntityType="Self.CustomerPaymentTransaction" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CustomerPaymentTransaction].[TransactionId] AS [TransactionId], 
+    [CustomerPaymentTransaction].[CustomerId] AS [CustomerId], 
+    [CustomerPaymentTransaction].[OrderId] AS [OrderId], 
+    [CustomerPaymentTransaction].[PaymentCrAmount] AS [PaymentCrAmount], 
+    [CustomerPaymentTransaction].[PaymentDrAmount] AS [PaymentDrAmount], 
+    [CustomerPaymentTransaction].[PaymentDate] AS [PaymentDate], 
+    [CustomerPaymentTransaction].[PaymentReceivedBy] AS [PaymentReceivedBy], 
+    [CustomerPaymentTransaction].[Ref1] AS [Ref1], 
+    [CustomerPaymentTransaction].[Ref2] AS [Ref2]
+    FROM [dbo].[CustomerPaymentTransaction] AS [CustomerPaymentTransaction]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="CustomerWallet" EntityType="Self.CustomerWallet" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CustomerWallet].[WalletId] AS [WalletId], 
+    [CustomerWallet].[CustomerId] AS [CustomerId], 
+    [CustomerWallet].[WalletBalance] AS [WalletBalance], 
+    [CustomerWallet].[AmountDueDate] AS [AmountDueDate]
+    FROM [dbo].[CustomerWallet] AS [CustomerWallet]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Employee" EntityType="Self.Employee" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Employee].[EmployeeId] AS [EmployeeId], 
+    [Employee].[Name] AS [Name], 
+    [Employee].[UserName] AS [UserName], 
+    [Employee].[Password] AS [Password], 
+    [Employee].[Address] AS [Address], 
+    [Employee].[City] AS [City], 
+    [Employee].[PostalCode] AS [PostalCode], 
+    [Employee].[MobileNumber] AS [MobileNumber], 
+    [Employee].[IsActive] AS [IsActive]
+    FROM [dbo].[Employee] AS [Employee]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EmployeeRole].[EmployeeId] AS [EmployeeId], 
+    [EmployeeRole].[RoleId] AS [RoleId]
+    FROM [dbo].[EmployeeRole] AS [EmployeeRole]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Module" EntityType="Self.Module" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Module].[ModuleId] AS [ModuleId], 
+    [Module].[ModuleName] AS [ModuleName], 
+    [Module].[IsActive] AS [IsActive]
+    FROM [dbo].[Module] AS [Module]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ProductOrder" EntityType="Self.ProductOrder" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ProductOrder].[OrderId] AS [OrderId], 
+    [ProductOrder].[OrderDate] AS [OrderDate], 
+    [ProductOrder].[OrderProductId] AS [OrderProductId], 
+    [ProductOrder].[OrderPurchaseDtm] AS [OrderPurchaseDtm], 
+    [ProductOrder].[OrderQuantity] AS [OrderQuantity], 
+    [ProductOrder].[OrderPrice] AS [OrderPrice], 
+    [ProductOrder].[OrderStatus] AS [OrderStatus], 
+    [ProductOrder].[OrderDeilveredDate] AS [OrderDeilveredDate], 
+    [ProductOrder].[OrderDeilveredBy] AS [OrderDeilveredBy], 
+    [ProductOrder].[OrderCustomerId] AS [OrderCustomerId], 
+    [ProductOrder].[OrderPaymentMode] AS [OrderPaymentMode], 
+    [ProductOrder].[OrderComments] AS [OrderComments], 
+    [ProductOrder].[OrderAmount] AS [OrderAmount], 
+    [ProductOrder].[OrderTax] AS [OrderTax], 
+    [ProductOrder].[TotalAmount] AS [TotalAmount], 
+    [ProductOrder].[VehicleNumber] AS [VehicleNumber], 
+    [ProductOrder].[DriverName] AS [DriverName], 
+    [ProductOrder].[DriverNumber] AS [DriverNumber], 
+    [ProductOrder].[JCBDriverNumber] AS [JCBDriverNumber], 
+    [ProductOrder].[RoyaltyNumber] AS [RoyaltyNumber], 
+    [ProductOrder].[OrderPriority] AS [OrderPriority], 
+    [ProductOrder].[Ref1] AS [Ref1], 
+    [ProductOrder].[Ref2] AS [Ref2]
+    FROM [dbo].[ProductOrder] AS [ProductOrder]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Role" EntityType="Self.Role" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Role].[RoleId] AS [RoleId], 
+    [Role].[RoleName] AS [RoleName], 
+    [Role].[RoleDescription] AS [RoleDescription]
+    FROM [dbo].[Role] AS [Role]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="RoleModule" EntityType="Self.RoleModule" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [RoleModule].[RoleId] AS [RoleId], 
+    [RoleModule].[SecurityId] AS [SecurityId]
+    FROM [dbo].[RoleModule] AS [RoleModule]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SiteConfigurations" EntityType="Self.SiteConfigurations" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SiteConfigurations].[Id] AS [Id], 
+    [SiteConfigurations].[KeyData] AS [KeyData], 
+    [SiteConfigurations].[KeyName] AS [KeyName], 
+    [SiteConfigurations].[DataVal] AS [DataVal], 
+    [SiteConfigurations].[DefaultVal] AS [DefaultVal], 
+    [SiteConfigurations].[Description] AS [Description]
+    FROM [dbo].[SiteConfigurations] AS [SiteConfigurations]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="fk_Order_ProductSiteMapping" Association="Self.fk_Order_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+      <End Role="ProductOrder" EntitySet="ProductOrder" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProcutStock_ProductSiteMapping" Association="Self.fk_ProcutStock_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+      <End Role="ProductStock" EntitySet="ProductStock" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Item" Association="Self.fk_ProductSiteMapping_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Product" Association="Self.fk_ProductSiteMapping_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Site" Association="Self.fk_ProductSiteMapping_Site">
+      <End Role="Site" EntitySet="Site" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Sales_ProductSiteMapping" Association="Self.fk_Sales_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

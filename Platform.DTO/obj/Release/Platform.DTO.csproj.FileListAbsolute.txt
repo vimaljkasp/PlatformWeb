@@ -1,0 +1,9 @@
+F:\GitHub\PlatformWebHost\Platform.DTO\bin\Release\Platform.DTO.dll
+F:\GitHub\PlatformWebHost\Platform.DTO\bin\Release\Platform.DTO.pdb
+F:\GitHub\PlatformWebHost\Platform.DTO\bin\Release\FluentValidation.dll
+F:\GitHub\PlatformWebHost\Platform.DTO\bin\Release\FluentValidation.WebApi.dll
+F:\GitHub\PlatformWebHost\Platform.DTO\obj\Release\Platform.DTO.csprojAssemblyReference.cache
+F:\GitHub\PlatformWebHost\Platform.DTO\obj\Release\Platform.DTO.csproj.CoreCompileInputs.cache
+F:\GitHub\PlatformWebHost\Platform.DTO\obj\Release\Platform.DTO.csproj.CopyComplete
+F:\GitHub\PlatformWebHost\Platform.DTO\obj\Release\Platform.DTO.dll
+F:\GitHub\PlatformWebHost\Platform.DTO\obj\Release\Platform.DTO.pdb

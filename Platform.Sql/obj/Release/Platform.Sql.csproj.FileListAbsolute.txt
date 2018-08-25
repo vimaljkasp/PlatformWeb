@@ -1,0 +1,12 @@
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\Platform.Sql.dll.config
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\Platform.Sql.dll
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\Platform.Sql.pdb
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\EntityFramework.dll
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\EntityFramework.SqlServer.dll
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\EntityFramework.xml
+F:\GitHub\PlatformWebHost\Platform.Sql\bin\Release\EntityFramework.SqlServer.xml
+F:\GitHub\PlatformWebHost\Platform.Sql\obj\Release\Platform.Sql.csprojAssemblyReference.cache
+F:\GitHub\PlatformWebHost\Platform.Sql\obj\Release\Platform.Sql.csproj.CoreCompileInputs.cache
+F:\GitHub\PlatformWebHost\Platform.Sql\obj\Release\Platform.Sql.csproj.CopyComplete
+F:\GitHub\PlatformWebHost\Platform.Sql\obj\Release\Platform.Sql.dll
+F:\GitHub\PlatformWebHost\Platform.Sql\obj\Release\Platform.Sql.pdb

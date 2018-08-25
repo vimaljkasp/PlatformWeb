@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" />
+    <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="20" />
+    <Property Name="District" Type="nvarchar" MaxLength="20" />
+    <Property Name="State" Type="nvarchar" MaxLength="40" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="HomePhone" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="CustomerPaymentTransaction">
+    <Key>
+      <PropertyRef Name="CustomerPaymentId" />
+    </Key>
+    <Property Name="CustomerPaymentId" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="PaymentCrAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentDrAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+    <Property Name="PaymentReceivedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CustomerSession">
+    <Key>
+      <PropertyRef Name="SessionId" />
+    </Key>
+    <Property Name="SessionId" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="SessionStartDtm" Type="datetime" Nullable="false" />
+    <Property Name="SessionEndDtm" Type="datetime" Nullable="false" />
+    <Property Name="IsLogout" Type="bit" />
+  </EntityType>
+  <EntityType Name="CustomerWallet">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="WalletBalance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AmountDueDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="District" Type="nvarchar" MaxLength="50" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="HomePhonne" Type="nvarchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="EmployeeRole">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeSession">
+    <Key>
+      <PropertyRef Name="SessionId" />
+    </Key>
+    <Property Name="SessionId" Type="int" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" />
+    <Property Name="SiteId" Type="int" />
+    <Property Name="SessionStartDtm" Type="datetime" Nullable="false" />
+    <Property Name="SessionEndDtm" Type="datetime" Nullable="false" />
+    <Property Name="IsLogout" Type="bit" />
+  </EntityType>
+  <EntityType Name="ItemCategory">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="ItemDescription" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="ModuleId" />
+    </Key>
+    <Property Name="ModuleId" Type="int" Nullable="false" />
+    <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="NumberMaster">
+    <Key>
+      <PropertyRef Name="EntityCode" />
+    </Key>
+    <Property Name="EntityCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NextNumber" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="ProductCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="40" />
+    <Property Name="ProductDescription" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProductQuantity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductOrder">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="OrderNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OrderPurchaseDtm" Type="datetime" Nullable="false" />
+    <Property Name="OrderCustomerId" Type="int" />
+    <Property Name="OrderPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="OrderTax" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OrderTotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OrderPriority" Type="nvarchar" MaxLength="50" />
+    <Property Name="OrderComments" Type="nvarchar" MaxLength="80" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductOrderDetail">
+    <Key>
+      <PropertyRef Name="ProductOrderDetailId" />
+    </Key>
+    <Property Name="ProductOrderDetailId" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="ProductMappingId" Type="int" />
+    <Property Name="OrderStatus" Type="int" Nullable="false" />
+    <Property Name="OrderAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="DeliveryExpectedDate" Type="date" Nullable="false" />
+    <Property Name="DeliveredDate" Type="datetime" />
+    <Property Name="DeliveredBy" Type="nvarchar" MaxLength="150" />
+    <Property Name="VehicleNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="DriverName" Type="nvarchar" MaxLength="150" />
+    <Property Name="DriverNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="JCBDriverNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="RoyaltyNumber" Type="nvarchar" MaxLength="150" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductSales">
+    <Key>
+      <PropertyRef Name="SalesDate" />
+      <PropertyRef Name="ProductMappingId" />
+    </Key>
+    <Property Name="SalesId" Type="int" Nullable="false" />
+    <Property Name="SalesDate" Type="date" Nullable="false" />
+    <Property Name="ProductMappingId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductSiteMapping">
+    <Key>
+      <PropertyRef Name="ProductMappingId" />
+    </Key>
+    <Property Name="ProductMappingId" Type="int" Nullable="false" />
+    <Property Name="SiteId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductStock">
+    <Key>
+      <PropertyRef Name="StockDate" />
+      <PropertyRef Name="StockProductId" />
+    </Key>
+    <Property Name="StockId" Type="int" Nullable="false" />
+    <Property Name="StockDate" Type="date" Nullable="false" />
+    <Property Name="StockProductId" Type="int" Nullable="false" />
+    <Property Name="StockCreatedBy" Type="int" Nullable="false" />
+    <Property Name="StockCreatedDtm" Type="datetime" Nullable="false" />
+    <Property Name="StockQuantiy" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="RoleModule">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="ModuleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="ModuleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Site">
+    <Key>
+      <PropertyRef Name="SiteId" />
+    </Key>
+    <Property Name="SiteId" Type="int" Nullable="false" />
+    <Property Name="SiteCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="SiteName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="SiteAddress" Type="nvarchar" MaxLength="100" />
+    <Property Name="SiteCity" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="SiteState" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="SiteZipCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="SiteMobileNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="SiteDistrict" Type="nvarchar" MaxLength="20" />
+    <Property Name="SiteHomePhone" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="SiteConfigurations">
+    <Key>
+      <PropertyRef Name="KeyData" />
+      <PropertyRef Name="KeyName" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="KeyData" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="KeyName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="DataVal" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="DefaultVal" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="fk_ProcutStock_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="StockProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductOrder_CustomerId">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="ProductOrder">
+        <PropertyRef Name="OrderCustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductOrderDetail_ProductOrder">
+    <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="0..1" />
+    <End Role="ProductOrderDetail" Type="Self.ProductOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductOrder">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="ProductOrderDetail">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductOrderDetail_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="0..1" />
+    <End Role="ProductOrderDetail" Type="Self.ProductOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductOrderDetail">
+        <PropertyRef Name="ProductMappingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Item">
+    <End Role="ItemCategory" Type="Self.ItemCategory" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategory">
+        <PropertyRef Name="ItemId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ProductSiteMapping_Site">
+    <End Role="Site" Type="Self.Site" Multiplicity="1" />
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Site">
+        <PropertyRef Name="SiteId" />
+      </Principal>
+      <Dependent Role="ProductSiteMapping">
+        <PropertyRef Name="SiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Sales_ProductSiteMapping">
+    <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
+    <End Role="ProductSales" Type="Self.ProductSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSiteMapping">
+        <PropertyRef Name="ProductMappingId" />
+      </Principal>
+      <Dependent Role="ProductSales">
+        <PropertyRef Name="ProductMappingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PlatformDBModelStoreContainer">
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerPaymentTransaction" EntityType="Self.CustomerPaymentTransaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerSession" EntityType="Self.CustomerSession" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerWallet" EntityType="Self.CustomerWallet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeSession" EntityType="Self.EmployeeSession" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NumberMaster" EntityType="Self.NumberMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductOrder" EntityType="Self.ProductOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductOrderDetail" EntityType="Self.ProductOrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSales" EntityType="Self.ProductSales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSiteMapping" EntityType="Self.ProductSiteMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductStock" EntityType="Self.ProductStock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Site" EntityType="Self.Site" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SiteConfigurations" EntityType="Self.SiteConfigurations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleModule" EntityType="Self.RoleModule" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [RoleModule].[RoleId] AS [RoleId], 
+    [RoleModule].[ModuleId] AS [ModuleId]
+    FROM [dbo].[RoleModule] AS [RoleModule]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="fk_ProcutStock_ProductSiteMapping" Association="Self.fk_ProcutStock_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+      <End Role="ProductStock" EntitySet="ProductStock" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductOrder_CustomerId" Association="Self.fk_ProductOrder_CustomerId">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="ProductOrder" EntitySet="ProductOrder" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductOrderDetail_ProductOrder" Association="Self.fk_ProductOrderDetail_ProductOrder">
+      <End Role="ProductOrder" EntitySet="ProductOrder" />
+      <End Role="ProductOrderDetail" EntitySet="ProductOrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductOrderDetail_ProductSiteMapping" Association="Self.fk_ProductOrderDetail_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+      <End Role="ProductOrderDetail" EntitySet="ProductOrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Item" Association="Self.fk_ProductSiteMapping_Item">
+      <End Role="ItemCategory" EntitySet="ItemCategory" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Product" Association="Self.fk_ProductSiteMapping_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ProductSiteMapping_Site" Association="Self.fk_ProductSiteMapping_Site">
+      <End Role="Site" EntitySet="Site" />
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Sales_ProductSiteMapping" Association="Self.fk_Sales_ProductSiteMapping">
+      <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
+      <End Role="ProductSales" EntitySet="ProductSales" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
