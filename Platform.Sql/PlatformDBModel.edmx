@@ -33,6 +33,11 @@
           <Property Name="PaymentReceivedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDtm" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDtm" Type="datetime" />
         </EntityType>
         <EntityType Name="CustomerSession">
           <Key>
@@ -142,6 +147,13 @@
           <Property Name="OrderComments" Type="nvarchar" MaxLength="80" />
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderDiscount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDtm" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDtm" Type="datetime" />
+          <Property Name="InActive" Type="bit" />
+          <Property Name="OrderPaidAmount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrderDetail">
           <Key>
@@ -158,12 +170,14 @@
           <Property Name="VehicleNumber" Type="nvarchar" MaxLength="150" />
           <Property Name="DriverName" Type="nvarchar" MaxLength="150" />
           <Property Name="DriverNumber" Type="nvarchar" MaxLength="150" />
-          <Property Name="JCBDriverNumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="JCBDriverName" Type="nvarchar" MaxLength="150" />
           <Property Name="RoyaltyNumber" Type="nvarchar" MaxLength="150" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChalanNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="InActive" Type="bit" />
         </EntityType>
         <EntityType Name="ProductSales">
           <Key>
@@ -435,6 +449,11 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="PaymentReceivedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDtm" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDtm" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="CustomerSession">
           <Key>
@@ -548,6 +567,13 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="Self.fk_ProductOrder_CustomerId" FromRole="ProductOrder" ToRole="Customer" />
           <NavigationProperty Name="ProductOrderDetails" Relationship="Self.fk_ProductOrderDetail_ProductOrder" FromRole="ProductOrder" ToRole="ProductOrderDetail" />
+          <Property Name="OrderDiscount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDtm" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDtm" Type="DateTime" Precision="3" />
+          <Property Name="InActive" Type="Boolean" />
+          <Property Name="OrderPaidAmount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrderDetail">
           <Key>
@@ -572,6 +598,9 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductOrder" Relationship="Self.fk_ProductOrderDetail_ProductOrder" FromRole="ProductOrderDetail" ToRole="ProductOrder" />
           <NavigationProperty Name="ProductSiteMapping" Relationship="Self.fk_ProductOrderDetail_ProductSiteMapping" FromRole="ProductOrderDetail" ToRole="ProductSiteMapping" />
+          <Property Name="JCBDriverName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ChalanNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="ProductSale">
           <Key>
@@ -837,6 +866,11 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <EntitySetMapping Name="CustomerPaymentTransactions">
             <EntityTypeMapping TypeName="PlatformDBModel.CustomerPaymentTransaction">
               <MappingFragment StoreEntitySet="CustomerPaymentTransaction">
+                <ScalarProperty Name="ModifiedDtm" ColumnName="ModifiedDtm" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDtm" ColumnName="CreatedDtm" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
                 <ScalarProperty Name="CustomerPaymentId" ColumnName="CustomerPaymentId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -953,6 +987,13 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <EntitySetMapping Name="ProductOrders">
             <EntityTypeMapping TypeName="PlatformDBModel.ProductOrder">
               <MappingFragment StoreEntitySet="ProductOrder">
+                <ScalarProperty Name="OrderPaidAmount" ColumnName="OrderPaidAmount" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="ModifiedDtm" ColumnName="ModifiedDtm" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDtm" ColumnName="CreatedDtm" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="OrderDiscount" ColumnName="OrderDiscount" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
                 <ScalarProperty Name="OrderPurchaseDtm" ColumnName="OrderPurchaseDtm" />
@@ -970,6 +1011,9 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <EntitySetMapping Name="ProductOrderDetails">
             <EntityTypeMapping TypeName="PlatformDBModel.ProductOrderDetail">
               <MappingFragment StoreEntitySet="ProductOrderDetail">
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="ChalanNumber" ColumnName="ChalanNumber" />
+                <ScalarProperty Name="JCBDriverName" ColumnName="JCBDriverName" />
                 <ScalarProperty Name="ProductOrderDetailId" ColumnName="ProductOrderDetailId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="ProductMappingId" ColumnName="ProductMappingId" />
@@ -981,7 +1025,6 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
                 <ScalarProperty Name="VehicleNumber" ColumnName="VehicleNumber" />
                 <ScalarProperty Name="DriverName" ColumnName="DriverName" />
                 <ScalarProperty Name="DriverNumber" ColumnName="DriverNumber" />
-                <ScalarProperty Name="JCBDriverNumber" ColumnName="JCBDriverNumber" />
                 <ScalarProperty Name="RoyaltyNumber" ColumnName="RoyaltyNumber" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />

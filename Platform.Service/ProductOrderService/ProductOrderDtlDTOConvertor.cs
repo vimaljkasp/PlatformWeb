@@ -27,7 +27,7 @@ namespace Platform.Service
             productOrderDtlDTO.VehicleNumber = productOrderDetail.VehicleNumber;
             productOrderDtlDTO.DriverName = productOrderDetail.DriverName;
             productOrderDtlDTO.DriverNumber = productOrderDetail.DriverNumber;
-            productOrderDtlDTO.JCBDriverNumber = productOrderDetail.JCBDriverNumber;
+            productOrderDtlDTO.JCBDriverName = productOrderDetail.JCBDriverName;
             productOrderDtlDTO.RoyaltyNumber = productOrderDetail.RoyaltyNumber;
             productOrderDtlDTO.OrderAddress = productOrderDetail.OrderAddress;
 
@@ -49,8 +49,9 @@ namespace Platform.Service
                 productOrderDetail.VehicleNumber = productOrderDtlDTO.VehicleNumber;
                 productOrderDetail.DriverName = productOrderDtlDTO.DriverName;
                 productOrderDetail.DriverNumber = productOrderDtlDTO.DriverNumber;
-                productOrderDetail.JCBDriverNumber = productOrderDtlDTO.JCBDriverNumber;
+                productOrderDetail.JCBDriverName = productOrderDtlDTO.JCBDriverName;
                 productOrderDetail.RoyaltyNumber = productOrderDtlDTO.RoyaltyNumber;
+                productOrderDetail.ChalanNumber = productOrderDtlDTO.ChalanNumber;
                 productOrderDetail.OrderAddress = productOrderDtlDTO.OrderAddress;
             }
             else

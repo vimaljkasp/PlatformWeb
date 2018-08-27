@@ -50,6 +50,7 @@ namespace PlatformWeb.Controller
         }
 
         //Put api/Customer/5
+        [Route("api/ProductOrders/{id}")]
         public IHttpActionResult Put(int customerid, [FromBody]ProductOrderDTO productOrderDTO)
         {
             if (productOrderDTO == null)

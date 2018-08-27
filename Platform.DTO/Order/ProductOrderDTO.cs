@@ -12,16 +12,18 @@ namespace Platform.DTO
     public class ProductOrderDTO
     {
         public int OrderId { get; set; }
-  
+        
+        
        
         public int ProductMappingId { get; set; }
-        public decimal Qunatity { get; set; }
+        public decimal Quantity { get; set; }
         public int OrderCustomerId { get; set; }
         public string OrderComments { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal OrderTotalPrice { get; set; }
         public decimal OrderTax { get; set; }
         public decimal OrderPrice { get; set; }
+        public decimal OrderDiscount { get; set; }
         public string OrderPriority { get; set; }
         public string OrderAddress { get; set; }
         public DateTime ExpectedDeliveryDate { get; set; }

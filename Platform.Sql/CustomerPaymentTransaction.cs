@@ -23,5 +23,10 @@ namespace Platform.Sql
         public string PaymentReceivedBy { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
+        public string PaymentMode { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDtm { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDtm { get; set; }
     }
 }

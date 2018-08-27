@@ -20,7 +20,6 @@ namespace Platform.DTO
         public string PaymentReceivedBy { get; set; }
         public string PaymentComments { get; set; }
         public string PaymentMode { get; set; }
-        public string Ref1 { get; set; }
         public string Ref2 { get; set; }
     }
 

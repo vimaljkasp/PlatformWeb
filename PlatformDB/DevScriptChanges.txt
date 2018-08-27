@@ -1,0 +1,79 @@
+alter table productorder add  OrderDiscount decimal(18,2) null
+
+
+alter table productorder add CreatedBy int null
+
+alter table productOrder add CreatedDtm datetime null
+
+
+alter table productOrder add ModifiedBy int null
+
+alter table productorder add ModifiedDtm datetime null
+
+
+alter table productorder add InActive bit default 0
+
+
+alter table productorderdetail add ChalanNumber nvarchar(50) null
+
+alter table productorderdetail add InActive bit default 0
+
+SP_RENAME 'productorderdetail.JCBDriverNumber','JCBDriverName'
+
+alter table customerpaymenttransaction add PaymentMode nvarchar(50) null
+
+
+alter table CustomerPaymentTransaction add CreatedBy int null
+
+alter table CustomerPaymentTransaction add CreatedDtm datetime null
+
+
+alter table CustomerPaymentTransaction add ModifiedBy int null
+
+alter table CustomerPaymentTransaction add ModifiedDtm datetime null
+
+alter table ProductOrder add OrderPaidAmount decimal(18,2) null
+
+
+USE [PlatformDB]
+GO
+/****** Object:  StoredProcedure [dbo].[GetProductOrders]    Script Date: 27-08-2018 08:23:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[GetProductOrders] 
+AS
+
+SELECT
+c.CustomerId,
+c.Name,
+c.MobileNumber,
+o.OrderId,
+od.ProductOrderDetailId,
+ps.ProductMappingId,
+p.ProductName,
+ISNULL(Od.Quantity,0),
+ISNULL(O.OrderTotalPrice,0),
+o.OrderPurchaseDtm,
+od.OrderStatus,
+o.OrderNumber,
+od.OrderAddress,
+o.OrderComments,
+od.DeliveryExpectedDate,
+o.OrderPriority
+FROM
+[ProductOrder] O
+inner join [Customer] c on c.customerId=O.OrderCustomerId
+inner join [ProductOrderDetail] Od on O.OrderId=Od.OrderId
+inner join [ProductSiteMapping] Ps on ps.ProductMappingId=od.ProductMappingId
+inner join [Product] P on ps.ProductId=p.ProductId
+
+Where
+o.InActive=0
+
+Order By
+o.OrderPurchaseDtm desc
+
+

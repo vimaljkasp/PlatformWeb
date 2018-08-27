@@ -31,6 +31,13 @@ namespace Platform.Sql
         public string OrderComments { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
+        public Nullable<decimal> OrderDiscount { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDtm { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDtm { get; set; }
+        public Nullable<bool> InActive { get; set; }
+        public Nullable<decimal> OrderPaidAmount { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

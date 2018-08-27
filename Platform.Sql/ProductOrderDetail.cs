@@ -31,6 +31,9 @@ namespace Platform.Sql
         public Nullable<decimal> TotalPrice { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
+        public string JCBDriverName { get; set; }
+        public string ChalanNumber { get; set; }
+        public Nullable<bool> InActive { get; set; }
     
         public virtual ProductOrder ProductOrder { get; set; }
         public virtual ProductSiteMapping ProductSiteMapping { get; set; }

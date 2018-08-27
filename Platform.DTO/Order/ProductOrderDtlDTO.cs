@@ -19,6 +19,8 @@ namespace Platform.DTO
         public decimal UnitPrice { get; set; }
         public decimal OrderPrice { get; set; }
         public decimal OrderTax { get; set; }
+        public decimal OrderDiscount { get; set; }
+        public decimal OrderAmountPaid { get; set; }
         public decimal TotalPrice { get; set; }
         public String OrderStatus { get; set; }
         public DateTime DeliveryExpectedDate { get; set; }
@@ -27,8 +29,9 @@ namespace Platform.DTO
         public string VehicleNumber { get; set; }
         public string DriverName { get; set; }
         public string DriverNumber { get; set; }
-        public string JCBDriverNumber { get; set; }
+        public string JCBDriverName { get; set; }
         public string RoyaltyNumber { get; set; }
+        public string ChalanNumber { get; set; }
         public string OrderAddress { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }

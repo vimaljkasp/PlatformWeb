@@ -21,7 +21,7 @@ namespace Platform.Service
             customerPaymentDTO.PaymentDate = customerPaymentTransaction.PaymentDate;
             customerPaymentDTO.PaymentReceivedBy = customerPaymentTransaction.PaymentReceivedBy;
             customerPaymentDTO.PaymentComments = customerPaymentTransaction.Ref1;
-            customerPaymentDTO.PaymentMode = customerPaymentTransaction.Ref2;
+            customerPaymentDTO.PaymentMode = customerPaymentTransaction.PaymentMode;
             return customerPaymentDTO;
        
 
@@ -39,7 +39,7 @@ namespace Platform.Service
             customerPaymentTransaction.PaymentDate = customerPaymentDTO.PaymentDate;
             customerPaymentTransaction.PaymentReceivedBy = customerPaymentDTO.PaymentReceivedBy;
             customerPaymentTransaction.Ref1 = customerPaymentDTO.PaymentComments;
-            customerPaymentTransaction.Ref2 = customerPaymentDTO.PaymentMode;
+            customerPaymentTransaction.PaymentMode = customerPaymentDTO.PaymentMode;
           
 
 

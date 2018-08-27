@@ -32,16 +32,7 @@ namespace Platform.Service
 
         public static void ConvertToProductOrderEntity(ref ProductOrder productOrder, ProductOrderDTO productOrderDTO, bool isUpdate)
         {
-        if (isUpdate)
-        {
-            productOrderDTO.OrderId = productOrder.OrderId;
-                productOrder.OrderPrice = productOrderDTO.OrderPrice;
-                productOrder.OrderTax = productOrderDTO.OrderTax;
-                productOrder.OrderTotalPrice = productOrderDTO.OrderTotalPrice;
-
-            }
-            else
-        {
+      
             productOrder.OrderPurchaseDtm = productOrderDTO.OrderDate;
             productOrder.OrderCustomerId = productOrderDTO.OrderCustomerId;
             productOrder.OrderPriority = productOrderDTO.OrderPriority;
@@ -50,7 +41,7 @@ namespace Platform.Service
             productOrder.Ref1 = productOrderDTO.Ref1;
             productOrder.Ref2 = productOrderDTO.Ref2;
 
-            }
+            
 
         
 

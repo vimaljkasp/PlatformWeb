@@ -38,16 +38,16 @@ namespace PlatformWeb.Controller
 
 
 
-        //public IHttpActionResult Post([FromBody]ProductOrderDTO productOrderDTO)
-        //{
-        //    if (_productOrderDtlService == null)
-        //        return BadRequest("Argument Null");
+        public IHttpActionResult Post([FromBody]ProductOrderDtlDTO productOrderDtlDTO)
+        {
+            if (_productOrderDtlService == null)
+                return BadRequest("Argument Null");
 
-        //    _productOrderDtlService.AddProductOrder(productOrderDTO);
+            _productOrderDtlService.AddProductOrderDtl(productOrderDtlDTO);
 
-        //    return Ok();
+            return Ok();
 
-        //}
+        }
 
         //Put api/Customer/5
         [Route("api/ProductOrderDetails/{id}")]

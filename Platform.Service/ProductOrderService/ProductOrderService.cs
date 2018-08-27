@@ -28,7 +28,7 @@ namespace Platform.Service
             productOrderDetail.ProductOrderDetailId= unitOfWork.DashboardRepository.NextNumberGenerator("ProductOrderDetail");
             productOrderDetail.OrderId = productOrder.OrderId;
             productOrderDetail.ProductMappingId = productOrderDTO.ProductMappingId;
-            productOrderDetail.Quantity = productOrderDTO.Qunatity;
+            productOrderDetail.Quantity = productOrderDTO.Quantity;
             productOrderDetail.OrderAddress = productOrderDTO.OrderAddress;
             if(productOrderDTO.ExpectedDeliveryDate==DateTime.MinValue)
                 productOrderDetail.DeliveryExpectedDate = DateTime.Now.AddDays(10);
@@ -40,9 +40,12 @@ namespace Platform.Service
             unitOfWork.SaveChanges();           
         }
 
-        public void DeleteProductOrder(int productId)
+        public void DeleteProductOrder(int orderId)
         {
-            throw new NotImplementedException();
+            var productOrder = unitOfWork.ProductOrderRepository.GetById(orderId);
+            productOrder.InActive = true;
+            unitOfWork.ProductOrderRepository.Update(productOrder);
+            unitOfWork.SaveChanges();
         }
 
         public List<ProductOrders> GetAllProductOrders()
@@ -51,9 +54,9 @@ namespace Platform.Service
            return unitOfWork.DashboardRepository.GetProductOrders();
         }
 
-        public ProductOrderDTO GetProductOrderById(int productId)
+        public ProductOrderDTO GetProductOrderById(int orderId)
         {
-            var productOrder = unitOfWork.ProductOrderRepository.GetById(productId);
+            var productOrder = unitOfWork.ProductOrderRepository.GetById(orderId);
 
             return ProductOrderConvertor.ConvertToProductOrderDto(productOrder);
 
@@ -61,7 +64,30 @@ namespace Platform.Service
 
         public void UpdateProductOrder(ProductOrderDTO productOrderDTO)
         {
-            throw new NotImplementedException();
+            ProductOrder productOrder = unitOfWork.ProductOrderRepository.GetById(productOrderDTO.OrderId);
+
+            ProductOrderDetail productOrderDetail = unitOfWork.ProductOrderDtlRepository.GetByOrderId(productOrderDTO.OrderId);
+
+            
+
+            if (string.IsNullOrWhiteSpace(productOrderDTO.OrderAddress) == false)
+                productOrderDetail.OrderAddress = productOrderDTO.OrderAddress;
+
+            if (string.IsNullOrWhiteSpace(productOrderDTO.OrderComments) == false)
+                productOrder.OrderComments = productOrderDTO.OrderComments;
+
+            if (string.IsNullOrWhiteSpace(productOrderDTO.OrderPriority) == false)
+                productOrder.OrderPriority = productOrderDTO.OrderPriority;
+
+            if (productOrderDTO.ExpectedDeliveryDate != DateTime.MinValue)
+                productOrderDetail.DeliveryExpectedDate = productOrderDTO.ExpectedDeliveryDate;
+
+            if (productOrderDTO.Quantity > 0)
+                productOrderDetail.Quantity = productOrderDTO.Quantity;
+            unitOfWork.ProductOrderRepository.Update(productOrder);
+            unitOfWork.ProductOrderDtlRepository.Update(productOrderDetail);
+
+            unitOfWork.SaveChanges();
         }
         protected void Dispose(bool disposing)
         {

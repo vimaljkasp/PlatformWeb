@@ -22,7 +22,18 @@ namespace Platform.Service
             CustomerPaymentConvertor.ConvertToCustomerPaymentEntity(ref customerPaymentTransaction, customerPaymentDTO, false);
             unitOfWork.CustomerPaymentRepository.Add(customerPaymentTransaction);
             this.UpdateCustomerWallet(customerPaymentDTO);
+            this.UpdateAmountPaid(customerPaymentDTO);
             unitOfWork.SaveChanges();
+        }
+
+        private void UpdateAmountPaid(CustomerPaymentDTO customerPaymentDTO)
+        {
+            var productOrder = unitOfWork.ProductOrderRepository.GetById(customerPaymentDTO.OrderId);
+            if (productOrder != null)
+            {
+                productOrder.OrderPaidAmount += customerPaymentDTO.PaymentCrAmount;
+                unitOfWork.ProductOrderRepository.Update(productOrder);
+            }
         }
 
         private void UpdateCustomerWallet(CustomerPaymentDTO customerPaymentDTO)

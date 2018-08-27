@@ -12,13 +12,64 @@ namespace Platform.Service
     public class ProductOrderDtlService : IProductOrderDtlService,IDisposable
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
-       
 
-        
-
-        public void AddProductOrderDtl(ProductOrderDtlDTO customerDto)
+        public void AddProductOrderDtl(ProductOrderDtlDTO productOrderDtlDTO)
         {
-            throw new NotImplementedException();
+            this.CalcualteOrderTax(productOrderDtlDTO);
+            ProductOrderDetail productOrderDetail = unitOfWork.ProductOrderDtlRepository.GetById(productOrderDtlDTO.ProductOrderDetailId);
+            if (productOrderDetail != null)
+            {
+                productOrderDetail.ProductMappingId = productOrderDtlDTO.ProductMappingId;
+                if (productOrderDtlDTO.Quantity > 0)
+                    productOrderDetail.Quantity = productOrderDtlDTO.Quantity;
+
+                if (productOrderDtlDTO.OrderPrice > 0)
+                    productOrderDetail.TotalPrice = productOrderDtlDTO.OrderPrice;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.OrderStatus) == false)
+                    productOrderDetail.OrderStatus = (int)((OrderStatus)Enum.Parse(typeof(OrderStatus), productOrderDtlDTO.OrderStatus));
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.VehicleNumber) == false)
+                    productOrderDetail.VehicleNumber = productOrderDtlDTO.VehicleNumber;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DriverName) == false)
+                    productOrderDetail.DriverName = productOrderDtlDTO.DriverName;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DriverNumber) == false)
+                    productOrderDetail.DriverNumber = productOrderDtlDTO.DriverNumber;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.JCBDriverName) == false)
+                    productOrderDetail.JCBDriverName = productOrderDtlDTO.JCBDriverName;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.RoyaltyNumber) == false)
+                    productOrderDetail.RoyaltyNumber = productOrderDtlDTO.RoyaltyNumber;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.ChalanNumber) == false)
+                    productOrderDetail.ChalanNumber = productOrderDtlDTO.ChalanNumber;
+
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DeliveredBy) == false)
+                    productOrderDetail.DeliveredBy = productOrderDtlDTO.DeliveredBy;
+
+                if (productOrderDetail.DeliveredDate != DateTime.MinValue)
+                    productOrderDetail.DeliveredDate = productOrderDtlDTO.DeliveredDate;
+
+                unitOfWork.ProductOrderDtlRepository.Update(productOrderDetail);
+
+                //Update product Order for tax and total price
+                ProductOrder productOrder = unitOfWork.ProductOrderRepository.GetById(productOrderDtlDTO.OrderId);
+                productOrder.OrderPrice = productOrderDtlDTO.OrderPrice;
+                productOrder.OrderTax = productOrderDtlDTO.OrderTax;
+                productOrder.OrderDiscount = productOrderDtlDTO.OrderDiscount;
+                productOrder.OrderPaidAmount = productOrderDtlDTO.OrderAmountPaid;
+                productOrder.OrderTotalPrice = productOrderDtlDTO.TotalPrice - productOrderDtlDTO.OrderDiscount;
+                unitOfWork.ProductOrderRepository.Update(productOrder);
+
+                this.AddOrUpdateProductSales(productOrderDtlDTO);
+                this.AddCustomerPayment(productOrderDtlDTO);
+                this.AddOrUpdateCustomerWallet(productOrderDtlDTO);
+                unitOfWork.SaveChanges();
+            }
         }
 
         public void DeleteProductOrderDtl(int productOrderDtlId)
@@ -28,12 +79,20 @@ namespace Platform.Service
 
         public List<ProductOrderDtlDTO> GetAllProductOrderDtl()
         {
-            throw new NotImplementedException();
+            var productOrderDtlList = unitOfWork.ProductOrderDtlRepository.GetAll();
+            List<ProductOrderDtlDTO> productOrderDtlDTOList = new List<ProductOrderDtlDTO>();
+         foreach (ProductOrderDetail productOrderDetail in productOrderDtlList)
+            {
+                productOrderDtlDTOList.Add(ProductOrderDtlDTOConvertor.ConvertToProductOrderDtlDto(productOrderDetail));
+            }
+            return productOrderDtlDTOList;
         }
 
         public ProductOrderDtlDTO GetProductOrderDtlById(int productOrderDtlId)
         {
-            throw new NotImplementedException();
+            var productOrderDtl = unitOfWork.ProductOrderDtlRepository.GetById(productOrderDtlId);
+         ProductOrderDtlDTO productOrderDtlDTO=ProductOrderDtlDTOConvertor.ConvertToProductOrderDtlDto(productOrderDtl);
+            return productOrderDtlDTO;
         }
 
        
@@ -63,11 +122,15 @@ namespace Platform.Service
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DriverNumber) == false)
                     productOrderDetail.DriverNumber = productOrderDtlDTO.DriverNumber;
 
-                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.JCBDriverNumber) == false)
-                    productOrderDetail.JCBDriverNumber = productOrderDtlDTO.JCBDriverNumber;
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.JCBDriverName) == false)
+                    productOrderDetail.JCBDriverName = productOrderDtlDTO.JCBDriverName;
 
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.RoyaltyNumber) == false)
                     productOrderDetail.RoyaltyNumber = productOrderDtlDTO.RoyaltyNumber;
+
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.ChalanNumber) == false)
+                    productOrderDetail.ChalanNumber = productOrderDtlDTO.ChalanNumber;
+
 
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DeliveredBy) == false)
                     productOrderDetail.DeliveredBy = productOrderDtlDTO.DeliveredBy;
@@ -81,7 +144,9 @@ namespace Platform.Service
                 ProductOrder productOrder = unitOfWork.ProductOrderRepository.GetById(productOrderDtlDTO.OrderId);
                 productOrder.OrderPrice = productOrderDtlDTO.OrderPrice;
                 productOrder.OrderTax = productOrderDtlDTO.OrderTax;
-                productOrder.OrderTotalPrice = productOrderDtlDTO.TotalPrice;
+                productOrder.OrderDiscount = productOrderDtlDTO.OrderDiscount;
+                productOrder.OrderPaidAmount = productOrderDtlDTO.OrderAmountPaid;
+                productOrder.OrderTotalPrice = productOrderDtlDTO.TotalPrice-productOrderDtlDTO.OrderDiscount;
                 unitOfWork.ProductOrderRepository.Update(productOrder);
 
                 this.AddOrUpdateProductSales(productOrderDtlDTO);
@@ -106,7 +171,7 @@ namespace Platform.Service
 
             }
 
-            productOrderDtlDTO.TotalPrice = productOrderDtlDTO.OrderPrice + productOrderDtlDTO.OrderTax;
+            productOrderDtlDTO.TotalPrice = (productOrderDtlDTO.OrderPrice + productOrderDtlDTO.OrderTax);
         }
 
         private void AddOrUpdateProductSales(ProductOrderDtlDTO productOrderDtlDTO)
@@ -158,7 +223,7 @@ namespace Platform.Service
             customerPaymentTransaction.CustomerPaymentId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerPaymentTransaction");
             customerPaymentTransaction.CustomerId = productOrderDtlDTO.CustomerId;
             customerPaymentTransaction.OrderId = productOrderDtlDTO.OrderId;
-            customerPaymentTransaction.PaymentCrAmount = 0;
+            customerPaymentTransaction.PaymentCrAmount = productOrderDtlDTO.OrderAmountPaid;
             customerPaymentTransaction.PaymentDrAmount = productOrderDtlDTO.TotalPrice;
             customerPaymentTransaction.PaymentReceivedBy ="Order Placed";
             customerPaymentTransaction.PaymentDate = DateTime.Now.Date;

@@ -36,6 +36,18 @@ namespace Platform.Repository
         }
 
 
+        public ProductOrderDetail GetByOrderId(int orderId)
+        {
+            ProductOrderDetail productOrderDetail = new ProductOrderDetail();
+
+            productOrderDetail = _repository.ProductOrderDetails.FirstOrDefault(x => x.OrderId == orderId);
+
+
+
+            return productOrderDetail;
+        }
+
+
         public void Add(ProductOrderDetail productOrderDetail)
         {
 
