@@ -51,7 +51,7 @@ namespace Platform.Service
                 productOrderDetail.DriverNumber = productOrderDtlDTO.DriverNumber;
                 productOrderDetail.JCBDriverName = productOrderDtlDTO.JCBDriverName;
                 productOrderDetail.RoyaltyNumber = productOrderDtlDTO.RoyaltyNumber;
-                productOrderDetail.ChalanNumber = productOrderDtlDTO.ChalanNumber;
+                productOrderDetail.ChalanNumber = productOrderDtlDTO.ChallanNumber;
                 productOrderDetail.OrderAddress = productOrderDtlDTO.OrderAddress;
             }
             else

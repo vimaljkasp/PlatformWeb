@@ -44,8 +44,8 @@ namespace Platform.Service
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.RoyaltyNumber) == false)
                     productOrderDetail.RoyaltyNumber = productOrderDtlDTO.RoyaltyNumber;
 
-                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.ChalanNumber) == false)
-                    productOrderDetail.ChalanNumber = productOrderDtlDTO.ChalanNumber;
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.ChallanNumber) == false)
+                    productOrderDetail.ChalanNumber = productOrderDtlDTO.ChallanNumber;
 
 
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DeliveredBy) == false)
@@ -99,6 +99,7 @@ namespace Platform.Service
 
         public void UpdateProductOrderDtl(ProductOrderDtlDTO productOrderDtlDTO)
         {
+            if(productOrderDtlDTO.OrderPrice>0)
             this.CalcualteOrderTax(productOrderDtlDTO);
             ProductOrderDetail productOrderDetail = unitOfWork.ProductOrderDtlRepository.GetById(productOrderDtlDTO.ProductOrderDetailId);
             if (productOrderDetail != null)
@@ -128,8 +129,8 @@ namespace Platform.Service
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.RoyaltyNumber) == false)
                     productOrderDetail.RoyaltyNumber = productOrderDtlDTO.RoyaltyNumber;
 
-                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.ChalanNumber) == false)
-                    productOrderDetail.ChalanNumber = productOrderDtlDTO.ChalanNumber;
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.ChallanNumber) == false)
+                    productOrderDetail.ChalanNumber = productOrderDtlDTO.ChallanNumber;
 
 
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.DeliveredBy) == false)
@@ -149,9 +150,9 @@ namespace Platform.Service
                 productOrder.OrderTotalPrice = productOrderDtlDTO.TotalPrice-productOrderDtlDTO.OrderDiscount;
                 unitOfWork.ProductOrderRepository.Update(productOrder);
 
-                this.AddOrUpdateProductSales(productOrderDtlDTO);
-                this.AddCustomerPayment(productOrderDtlDTO);
-                this.AddOrUpdateCustomerWallet(productOrderDtlDTO);
+            //    this.AddOrUpdateProductSales(productOrderDtlDTO);
+            ///    this.AddCustomerPayment(productOrderDtlDTO);
+            //    this.AddOrUpdateCustomerWallet(productOrderDtlDTO);
                 unitOfWork.SaveChanges();
             }
         }

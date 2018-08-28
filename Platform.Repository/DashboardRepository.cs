@@ -69,6 +69,56 @@ namespace Platform.Repository
 
         }
 
+
+        public List<ProductOrderDtlDTO> GetProductOrderDetails()
+        {
+            List<ProductOrderDtlDTO> productOrders = new List<ProductOrderDtlDTO>();
+
+            // Create a SQL command to execute the sproc 
+            var cmd = _repository.Database.Connection.CreateCommand();
+            cmd.CommandText = "[dbo].[GetProductOrderDetails]";
+
+            try
+            {
+                _repository.Database.Connection.Open();
+
+                // Run the sproc  
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+
+                    productOrders.Add(
+                        new ProductOrderDtlDTO()
+                        {
+                            CustomerId = reader.GetInt32(0),
+                            CustomerName = reader.GetString(1),
+                        //    CustomerMobileNumber = reader.GetString(2),
+                            OrderId = reader.GetInt32(3),
+                            ProductOrderDetailId = reader.GetInt32(4),
+                            ProductMappingId = reader.GetInt32(5),
+                            ProductName = reader.GetString(6),
+                            Quantity = reader.GetDecimal(7),
+                         //   Amount = reader.GetDecimal(8),
+                         //   OrderDate = reader.GetDateTime(9),
+                            OrderStatus = ((OrderStatus)reader.GetInt32(10)).ToString(),
+                            OrderNumber = reader.GetString(11),
+                            OrderAddress = DbDataReaderExtension.SafeGetString(reader, 12),//GetString(12),
+                         //   OrderComments = DbDataReaderExtension.SafeGetString(reader, 13),
+                         //   ExpectedDeliveryDate = reader.GetDateTime(14),
+                        //    OrderPriority = DbDataReaderExtension.SafeGetString(reader, 15)
+
+                        });
+
+            }
+
+            finally
+            {
+                _repository.Database.Connection.Close();
+            }
+
+            return productOrders;
+
+        }
+
         public DashboardDTO GetDashBoardDetails(DateTime salesDate)
         {
             DashboardDTO dashboardDTO = new DashboardDTO()

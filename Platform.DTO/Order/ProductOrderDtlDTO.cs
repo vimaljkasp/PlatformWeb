@@ -14,6 +14,9 @@ namespace Platform.DTO
         public Int32 ProductOrderDetailId { get; set; }
         public Int32 OrderId { get; set; }
         public Int32 ProductMappingId { get; set; }
+        public string ProductName { get; set; }
+        public string OrderNumber { get; set; }
+        public string CustomerName { get; set; }
         public int CustomerId { get; set; }
         public decimal Quantity { get; set; }
         public decimal UnitPrice { get; set; }
@@ -31,7 +34,7 @@ namespace Platform.DTO
         public string DriverNumber { get; set; }
         public string JCBDriverName { get; set; }
         public string RoyaltyNumber { get; set; }
-        public string ChalanNumber { get; set; }
+        public string ChallanNumber { get; set; }
         public string OrderAddress { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
