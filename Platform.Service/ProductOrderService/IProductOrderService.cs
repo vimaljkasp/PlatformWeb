@@ -11,7 +11,7 @@ namespace Platform.Service
     {
          List<ProductOrders> GetAllProductOrders();
 
-        ProductOrderDTO GetProductOrderById(int productId);
+        ProductOrders GetProductOrderById(int productId);
 
         void AddProductOrder(ProductOrderDTO productOrderDTO);
 

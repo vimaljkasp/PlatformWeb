@@ -31,7 +31,7 @@ namespace PlatformWeb.Controller
 
 
    
-        public ProductOrderDTO Get(int productOrderId)
+        public ProductOrders Get(int productOrderId)
         {
             return _productOrderService.GetProductOrderById(productOrderId);
         }

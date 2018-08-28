@@ -79,6 +79,7 @@ namespace Platform.Service
 
         public List<ProductOrderDtlDTO> GetAllProductOrderDtl()
         {
+            
             var productOrderDtlList = unitOfWork.ProductOrderDtlRepository.GetAll();
             List<ProductOrderDtlDTO> productOrderDtlDTOList = new List<ProductOrderDtlDTO>();
          foreach (ProductOrderDetail productOrderDetail in productOrderDtlList)

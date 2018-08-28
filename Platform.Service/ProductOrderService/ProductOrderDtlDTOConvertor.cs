@@ -14,11 +14,22 @@ namespace Platform.Service
         {
             ProductOrderDtlDTO productOrderDtlDTO = new ProductOrderDtlDTO();
             productOrderDtlDTO.ProductOrderDetailId = productOrderDetail.ProductOrderDetailId;
-            productOrderDtlDTO.OrderId = productOrderDetail.OrderId.GetValueOrDefault();
-            productOrderDtlDTO.ProductMappingId = productOrderDetail.ProductMappingId.GetValueOrDefault();
-            productOrderDtlDTO.Quantity = productOrderDetail.Quantity.GetValueOrDefault();
+            productOrderDtlDTO.CustomerId = productOrderDetail.ProductOrder.OrderCustomerId.GetValueOrDefault();
+            productOrderDtlDTO.CustomerName = productOrderDetail.ProductOrder.Customer.Name;
 
-            productOrderDtlDTO.TotalPrice = productOrderDetail.TotalPrice.GetValueOrDefault();
+            productOrderDtlDTO.OrderId = productOrderDetail.ProductOrder.OrderId;
+            productOrderDtlDTO.OrderNumber = productOrderDetail.ProductOrder.OrderNumber;
+            productOrderDtlDTO.ProductMappingId = productOrderDetail.ProductMappingId.GetValueOrDefault();
+            productOrderDtlDTO.ProductName = productOrderDetail.ProductSiteMapping.Product.ProductName;
+
+
+
+            productOrderDtlDTO.Quantity = productOrderDetail.Quantity.GetValueOrDefault();
+            productOrderDtlDTO.OrderPrice = productOrderDetail.ProductOrder.OrderPrice;
+            productOrderDtlDTO.OrderTax = productOrderDetail.ProductOrder.OrderTax.GetValueOrDefault();
+            productOrderDtlDTO.OrderDiscount = productOrderDetail.ProductOrder.OrderDiscount.GetValueOrDefault();
+            productOrderDtlDTO.OrderAmountPaid = productOrderDetail.ProductOrder.OrderPaidAmount.GetValueOrDefault();
+            productOrderDtlDTO.TotalPrice = productOrderDetail.ProductOrder.OrderTotalPrice.GetValueOrDefault();
 
             productOrderDtlDTO.OrderStatus = productOrderDetail.OrderStatus.ToString();
             productOrderDtlDTO.DeliveryExpectedDate = productOrderDetail.DeliveryExpectedDate;
@@ -29,10 +40,12 @@ namespace Platform.Service
             productOrderDtlDTO.DriverNumber = productOrderDetail.DriverNumber;
             productOrderDtlDTO.JCBDriverName = productOrderDetail.JCBDriverName;
             productOrderDtlDTO.RoyaltyNumber = productOrderDetail.RoyaltyNumber;
+
+            productOrderDtlDTO.ChallanNumber = productOrderDetail.ChalanNumber;
             productOrderDtlDTO.OrderAddress = productOrderDetail.OrderAddress;
 
-            productOrderDtlDTO.Ref1 = productOrderDtlDTO.Ref1;
-            productOrderDtlDTO.Ref2 = productOrderDtlDTO.Ref2;
+            productOrderDtlDTO.Ref1 = productOrderDetail.Ref1;
+            productOrderDtlDTO.Ref2 = productOrderDetail.Ref2;
 
 
             return productOrderDtlDTO;

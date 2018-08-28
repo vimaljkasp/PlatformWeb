@@ -54,13 +54,13 @@ namespace Platform.Service
            return unitOfWork.DashboardRepository.GetProductOrders();
         }
 
-        public ProductOrderDTO GetProductOrderById(int orderId)
+        public ProductOrders GetProductOrderById(int orderId)
         {
-            var productOrder = unitOfWork.ProductOrderRepository.GetById(orderId);
+            return  unitOfWork.DashboardRepository.GetProductOrders().Where(o=>o.OrderId==orderId).FirstOrDefault();
 
-            return ProductOrderConvertor.ConvertToProductOrderDto(productOrder);
 
         }
+
 
         public void UpdateProductOrder(ProductOrderDTO productOrderDTO)
         {

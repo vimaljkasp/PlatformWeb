@@ -25,13 +25,12 @@ namespace Platform.Sql
         public string VehicleNumber { get; set; }
         public string DriverName { get; set; }
         public string DriverNumber { get; set; }
-        public string JCBDriverNumber { get; set; }
+        public string JCBDriverName { get; set; }
         public string RoyaltyNumber { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
-        public string JCBDriverName { get; set; }
         public string ChalanNumber { get; set; }
         public Nullable<bool> InActive { get; set; }
     
