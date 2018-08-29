@@ -74,6 +74,7 @@ namespace Platform.Service
 
         public void DeleteProductOrderDtl(int productOrderDtlId)
         {
+            //not required as you need to delete parent order from order api
             throw new NotImplementedException();
         }
 
@@ -84,6 +85,7 @@ namespace Platform.Service
             List<ProductOrderDtlDTO> productOrderDtlDTOList = new List<ProductOrderDtlDTO>();
          foreach (ProductOrderDetail productOrderDetail in productOrderDtlList)
             {
+                if(productOrderDetail.ProductOrder.InActive==false)
                 productOrderDtlDTOList.Add(ProductOrderDtlDTOConvertor.ConvertToProductOrderDtlDto(productOrderDetail));
             }
             return productOrderDtlDTOList;
@@ -92,7 +94,7 @@ namespace Platform.Service
         public ProductOrderDtlDTO GetProductOrderDtlById(int productOrderDtlId)
         {
             var productOrderDtl = unitOfWork.ProductOrderDtlRepository.GetById(productOrderDtlId);
-         ProductOrderDtlDTO productOrderDtlDTO=ProductOrderDtlDTOConvertor.ConvertToProductOrderDtlDto(productOrderDtl);
+            ProductOrderDtlDTO productOrderDtlDTO=ProductOrderDtlDTOConvertor.ConvertToProductOrderDtlDto(productOrderDtl);
             return productOrderDtlDTO;
         }
 
