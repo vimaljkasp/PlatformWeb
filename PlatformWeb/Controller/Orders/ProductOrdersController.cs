@@ -22,7 +22,7 @@ namespace PlatformWeb.Controller
 
        
       
-        public IEnumerable<ProductOrders> Get()
+        public IEnumerable<ProductOrderDTO> Get()
         {
 
             return _productOrderService.GetAllProductOrders();
@@ -31,7 +31,7 @@ namespace PlatformWeb.Controller
 
 
    
-        public ProductOrders Get(int id)
+        public ProductOrderDTO Get(int id)
         {
             return _productOrderService.GetProductOrderById(id);
         }

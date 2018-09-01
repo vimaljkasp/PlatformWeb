@@ -12,9 +12,19 @@ namespace Platform.DTO
     public class ProductOrderDTO
     {
         public int OrderId { get; set; }
-        
-        
-       
+        public string OrderNumber { get; set; }
+        public int ProductOrderDetailId { get; set; }
+        public string ProductName { get; set; }
+        public decimal Amount { get; set; }
+        public String OrderStatus { get; set; }
+
+        public int CustomerId { get; set; }
+
+        public string CustomerName { get; set; }
+
+        public string CustomerMobileNumber { get; set; }
+
+
         public int ProductMappingId { get; set; }
         public decimal Quantity { get; set; }
         public int OrderCustomerId { get; set; }
@@ -30,8 +40,6 @@ namespace Platform.DTO
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
 
-       
-
 
     }
 
@@ -44,5 +52,11 @@ namespace Platform.DTO
 
 
         }
+    }
+
+    public enum OrderStatus
+    {
+        Pending = 0,
+        Completed
     }
 }

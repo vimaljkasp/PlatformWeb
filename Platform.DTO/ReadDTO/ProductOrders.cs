@@ -42,9 +42,5 @@ namespace Platform.DTO
         public DateTime ExpectedDeliveryDate { get; set; }
     }
 
-    public enum OrderStatus
-    {
-        Pending=0,
-        Completed
-    }
+   
 }

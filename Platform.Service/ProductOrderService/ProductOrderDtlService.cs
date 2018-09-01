@@ -85,7 +85,7 @@ namespace Platform.Service
             List<ProductOrderDtlDTO> productOrderDtlDTOList = new List<ProductOrderDtlDTO>();
          foreach (ProductOrderDetail productOrderDetail in productOrderDtlList)
             {
-                if(productOrderDetail.ProductOrder.InActive==false)
+                if(productOrderDetail.ProductOrder.InActive==false || productOrderDetail.ProductOrder.InActive == null)
                 productOrderDtlDTOList.Add(ProductOrderDtlDTOConvertor.ConvertToProductOrderDtlDto(productOrderDetail));
             }
             return productOrderDtlDTOList;

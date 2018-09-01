@@ -48,16 +48,27 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
         }
 
-        public List<ProductOrders> GetAllProductOrders()
+        public List<ProductOrderDTO> GetAllProductOrders()
         {
-         
-           return unitOfWork.DashboardRepository.GetProductOrders();
+            var productOrderList = unitOfWork.ProductOrderRepository.GetAll();
+            List<ProductOrderDTO> productOrderDTOList = new List<ProductOrderDTO>();
+            foreach (ProductOrder productOrder in productOrderList)
+            {
+                if (productOrder.InActive == false || productOrder.InActive==null )
+                    productOrderDTOList.Add(ProductOrderConvertor.ConvertToProductOrderDto(productOrder));
+            }
+            return productOrderDTOList;
+            //  return unitOfWork.DashboardRepository.GetProductOrders();
         }
 
-        public ProductOrders GetProductOrderById(int orderId)
+        public ProductOrderDTO GetProductOrderById(int orderId)
         {
-            return  unitOfWork.DashboardRepository.GetProductOrders().Where(o=>o.OrderId==orderId).FirstOrDefault();
-
+            ProductOrderDTO productOrderDTO = new ProductOrderDTO();
+            var productOrder = unitOfWork.ProductOrderRepository.GetById(orderId);
+                    if (productOrder.InActive == false || productOrder.InActive == null)
+                  return ProductOrderConvertor.ConvertToProductOrderDto(productOrder);
+            
+            return productOrderDTO;
 
         }
 

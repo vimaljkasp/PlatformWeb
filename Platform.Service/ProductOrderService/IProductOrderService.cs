@@ -9,9 +9,9 @@ namespace Platform.Service
 {
     public interface IProductOrderService
     {
-         List<ProductOrders> GetAllProductOrders();
+         List<ProductOrderDTO> GetAllProductOrders();
 
-        ProductOrders GetProductOrderById(int productId);
+        ProductOrderDTO GetProductOrderById(int productId);
 
         void AddProductOrder(ProductOrderDTO productOrderDTO);
 
