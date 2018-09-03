@@ -22,17 +22,21 @@ namespace Platform.Service
             CustomerPaymentConvertor.ConvertToCustomerPaymentEntity(ref customerPaymentTransaction, customerPaymentDTO, false);
             unitOfWork.CustomerPaymentRepository.Add(customerPaymentTransaction);
             this.UpdateCustomerWallet(customerPaymentDTO);
+            
             this.UpdateAmountPaid(customerPaymentDTO);
             unitOfWork.SaveChanges();
         }
 
         private void UpdateAmountPaid(CustomerPaymentDTO customerPaymentDTO)
         {
-            var productOrder = unitOfWork.ProductOrderRepository.GetById(customerPaymentDTO.OrderId);
-            if (productOrder != null)
+            if (customerPaymentDTO.OrderId > 0)
             {
-                productOrder.OrderPaidAmount += customerPaymentDTO.PaymentCrAmount;
-                unitOfWork.ProductOrderRepository.Update(productOrder);
+                var productOrder = unitOfWork.ProductOrderRepository.GetById(customerPaymentDTO.OrderId);
+                if (productOrder != null)
+                {
+                    productOrder.OrderPaidAmount += customerPaymentDTO.PaymentCrAmount;
+                    unitOfWork.ProductOrderRepository.Update(productOrder);
+                }
             }
         }
 
@@ -52,7 +56,7 @@ namespace Platform.Service
                 customerWallet = new CustomerWallet();
                 customerWallet.WalletId= unitOfWork.DashboardRepository.NextNumberGenerator("CustomerWallet");
                 customerWallet.CustomerId = customerPaymentDTO.CustomerId;
-                customerWallet.WalletBalance = customerPaymentDTO.PaymentCrAmount;
+                customerWallet.WalletBalance -= customerPaymentDTO.PaymentCrAmount;
                 customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
                 unitOfWork.CustomerWalletRepository.Add(customerWallet);
               

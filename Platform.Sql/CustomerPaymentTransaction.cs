@@ -28,5 +28,7 @@ namespace Platform.Sql
         public Nullable<System.DateTime> CreatedDtm { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDtm { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }

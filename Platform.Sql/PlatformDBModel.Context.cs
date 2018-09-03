@@ -41,9 +41,9 @@ namespace Platform.Sql
         public virtual DbSet<ProductSale> ProductSales { get; set; }
         public virtual DbSet<ProductSiteMapping> ProductSiteMappings { get; set; }
         public virtual DbSet<ProductStock> ProductStocks { get; set; }
+        public virtual DbSet<RoleModule> RoleModules { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Site> Sites { get; set; }
         public virtual DbSet<SiteConfiguration> SiteConfigurations { get; set; }
-        public virtual DbSet<RoleModule> RoleModules { get; set; }
     }
 }

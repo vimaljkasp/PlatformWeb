@@ -17,6 +17,9 @@ namespace Platform.Sql
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
+            this.CustomerPaymentTransactions = new HashSet<CustomerPaymentTransaction>();
+            this.CustomerSessions = new HashSet<CustomerSession>();
+            this.CustomerWallets = new HashSet<CustomerWallet>();
             this.ProductOrders = new HashSet<ProductOrder>();
         }
     
@@ -30,7 +33,14 @@ namespace Platform.Sql
         public string PostalCode { get; set; }
         public string MobileNumber { get; set; }
         public string HomePhone { get; set; }
+        public string GSTINNumber { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerPaymentTransaction> CustomerPaymentTransactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerSession> CustomerSessions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerWallet> CustomerWallets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductOrder> ProductOrders { get; set; }
     }

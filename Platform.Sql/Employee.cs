@@ -14,6 +14,12 @@ namespace Platform.Sql
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.EmployeeSessions = new HashSet<EmployeeSession>();
+        }
+    
         public int EmployeeId { get; set; }
         public string Name { get; set; }
         public string UserName { get; set; }
@@ -26,5 +32,8 @@ namespace Platform.Sql
         public string MobileNumber { get; set; }
         public string HomePhonne { get; set; }
         public Nullable<bool> IsActive { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeSession> EmployeeSessions { get; set; }
     }
 }

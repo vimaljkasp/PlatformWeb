@@ -18,5 +18,7 @@ namespace Platform.Sql
         public int CustomerId { get; set; }
         public decimal WalletBalance { get; set; }
         public System.DateTime AmountDueDate { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -21,6 +21,9 @@ namespace Platform.DTO
         public string PostalCode { get; set; }
         public string MobileNumber { get; set; }
         public string HomePhone { get; set; }
+        public string GSTINNumber { get; set; }
+        public decimal CustomerBalance { get; set; }
+
     }
 
     public class CustomerValidator : AbstractValidator<CustomerDto>

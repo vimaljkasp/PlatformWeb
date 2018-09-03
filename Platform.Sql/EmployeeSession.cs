@@ -20,5 +20,7 @@ namespace Platform.Sql
         public System.DateTime SessionStartDtm { get; set; }
         public System.DateTime SessionEndDtm { get; set; }
         public Nullable<bool> IsLogout { get; set; }
+    
+        public virtual Employee Employee { get; set; }
     }
 }

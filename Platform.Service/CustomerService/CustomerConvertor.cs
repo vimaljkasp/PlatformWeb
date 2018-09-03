@@ -23,6 +23,8 @@ namespace Platform.Service
             customerDto.HomePhone = customer.HomePhone;
             customerDto.State = customer.State;
             customerDto.PostalCode = customer.PostalCode;
+            customerDto.GSTINNumber = customer.GSTINNumber;
+            customerDto.CustomerBalance = customer.CustomerWallets.FirstOrDefault().WalletBalance;
             return customerDto;
 
 
@@ -41,6 +43,7 @@ namespace Platform.Service
             customer.HomePhone = customerdto.HomePhone;
             customer.State = customerdto.State;
             customer.PostalCode = customerdto.PostalCode;
+            customer.GSTINNumber = customerdto.GSTINNumber;
             
             
         }

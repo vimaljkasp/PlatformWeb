@@ -19,6 +19,7 @@
           <Property Name="PostalCode" Type="nvarchar" MaxLength="20" />
           <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="HomePhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="GSTINNumber" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="CustomerPaymentTransaction">
           <Key>
@@ -60,7 +61,7 @@
         </EntityType>
         <EntityType Name="Employee">
           <Key>
-            <PropertyRef Name="UserName" />
+            <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
@@ -215,12 +216,9 @@
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RoleModule">
           <Key>
             <PropertyRef Name="RoleId" />
-            <PropertyRef Name="ModuleId" />
           </Key>
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="ModuleId" Type="int" Nullable="false" />
@@ -261,6 +259,54 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="DefaultVal" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <Association Name="FK_CustomerPaymentTransaction_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerPaymentTransaction" Type="Self.CustomerPaymentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerPaymentTransaction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerSession_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerSession" Type="Self.CustomerSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerSession">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerWallet_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerWallet" Type="Self.CustomerWallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerWallet">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeSession_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeSession" Type="Self.EmployeeSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeSession">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_ProcutStock_ProductSiteMapping">
           <End Role="ProductSiteMapping" Type="Self.ProductSiteMapping" Multiplicity="1" />
           <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
@@ -374,15 +420,26 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <EntitySet Name="ProductSales" EntityType="Self.ProductSales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductSiteMapping" EntityType="Self.ProductSiteMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductStock" EntityType="Self.ProductStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleModule" EntityType="Self.RoleModule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Site" EntityType="Self.Site" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteConfigurations" EntityType="Self.SiteConfigurations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoleModule" EntityType="Self.RoleModule" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [RoleModule].[RoleId] AS [RoleId], 
-    [RoleModule].[ModuleId] AS [ModuleId]
-    FROM [dbo].[RoleModule] AS [RoleModule]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_CustomerPaymentTransaction_CustomerId" Association="Self.FK_CustomerPaymentTransaction_CustomerId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerPaymentTransaction" EntitySet="CustomerPaymentTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerSession_CustomerId" Association="Self.FK_CustomerSession_CustomerId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerSession" EntitySet="CustomerSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerWallet_CustomerId" Association="Self.FK_CustomerWallet_CustomerId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerWallet" EntitySet="CustomerWallet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeSession_EmployeeId" Association="Self.FK_EmployeeSession_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeSession" EntitySet="EmployeeSession" />
+          </AssociationSet>
           <AssociationSet Name="fk_ProcutStock_ProductSiteMapping" Association="Self.fk_ProcutStock_ProductSiteMapping">
             <End Role="ProductSiteMapping" EntitySet="ProductSiteMapping" />
             <End Role="ProductStock" EntitySet="ProductStock" />
@@ -435,6 +492,10 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="HomePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GSTINNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerPaymentTransactions" Relationship="Self.FK_CustomerPaymentTransaction_CustomerId" FromRole="Customer" ToRole="CustomerPaymentTransaction" />
+          <NavigationProperty Name="CustomerSessions" Relationship="Self.FK_CustomerSession_CustomerId" FromRole="Customer" ToRole="CustomerSession" />
+          <NavigationProperty Name="CustomerWallets" Relationship="Self.FK_CustomerWallet_CustomerId" FromRole="Customer" ToRole="CustomerWallet" />
           <NavigationProperty Name="ProductOrders" Relationship="Self.fk_ProductOrder_CustomerId" FromRole="Customer" ToRole="ProductOrder" />
         </EntityType>
         <EntityType Name="CustomerPaymentTransaction">
@@ -455,6 +516,7 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="CreatedDtm" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDtm" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerPaymentTransaction_CustomerId" FromRole="CustomerPaymentTransaction" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerSession">
           <Key>
@@ -465,6 +527,7 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="SessionStartDtm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SessionEndDtm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsLogout" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerSession_CustomerId" FromRole="CustomerSession" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerWallet">
           <Key>
@@ -474,10 +537,11 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="AmountDueDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerWallet_CustomerId" FromRole="CustomerWallet" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
-            <PropertyRef Name="UserName" />
+            <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
@@ -491,6 +555,7 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="HomePhonne" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="EmployeeSessions" Relationship="Self.FK_EmployeeSession_EmployeeId" FromRole="Employee" ToRole="EmployeeSession" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -510,6 +575,7 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="SessionStartDtm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SessionEndDtm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsLogout" Type="Boolean" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeSession_EmployeeId" FromRole="EmployeeSession" ToRole="Employee" />
         </EntityType>
         <EntityType Name="ItemCategory">
           <Key>
@@ -646,6 +712,13 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductSiteMapping" Relationship="Self.fk_ProcutStock_ProductSiteMapping" FromRole="ProductStock" ToRole="ProductSiteMapping" />
         </EntityType>
+        <EntityType Name="RoleModule">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="ModuleId" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -683,14 +756,42 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <Property Name="DefaultVal" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="RoleModule">
-          <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="ModuleId" />
-          </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="ModuleId" Type="Int32" Nullable="false" />
-        </EntityType>
+        <Association Name="FK_CustomerPaymentTransaction_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerPaymentTransaction" Type="Self.CustomerPaymentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerPaymentTransaction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerSession_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CustomerSession" Type="Self.CustomerSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerSession">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerWallet_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerWallet" Type="Self.CustomerWallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerWallet">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_ProductOrder_CustomerId">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
@@ -700,6 +801,18 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
             </Principal>
             <Dependent Role="ProductOrder">
               <PropertyRef Name="OrderCustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeSession_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeSession" Type="Self.EmployeeSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeSession">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -804,13 +917,29 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
           <EntitySet Name="ProductSales" EntityType="Self.ProductSale" />
           <EntitySet Name="ProductSiteMappings" EntityType="Self.ProductSiteMapping" />
           <EntitySet Name="ProductStocks" EntityType="Self.ProductStock" />
+          <EntitySet Name="RoleModules" EntityType="Self.RoleModule" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Sites" EntityType="Self.Site" />
           <EntitySet Name="SiteConfigurations" EntityType="Self.SiteConfiguration" />
-          <EntitySet Name="RoleModules" EntityType="Self.RoleModule" />
+          <AssociationSet Name="FK_CustomerPaymentTransaction_CustomerId" Association="Self.FK_CustomerPaymentTransaction_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerPaymentTransaction" EntitySet="CustomerPaymentTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerSession_CustomerId" Association="Self.FK_CustomerSession_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerSession" EntitySet="CustomerSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerWallet_CustomerId" Association="Self.FK_CustomerWallet_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerWallet" EntitySet="CustomerWallets" />
+          </AssociationSet>
           <AssociationSet Name="fk_ProductOrder_CustomerId" Association="Self.fk_ProductOrder_CustomerId">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ProductOrder" EntitySet="ProductOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeSession_EmployeeId" Association="Self.FK_EmployeeSession_EmployeeId">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeSession" EntitySet="EmployeeSessions" />
           </AssociationSet>
           <AssociationSet Name="fk_ProductSiteMapping_Item" Association="Self.fk_ProductSiteMapping_Item">
             <End Role="ItemCategory" EntitySet="ItemCategories" />
@@ -860,6 +989,7 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="GSTINNumber" ColumnName="GSTINNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1070,6 +1200,14 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RoleModules">
+            <EntityTypeMapping TypeName="PlatformDBModel.RoleModule">
+              <MappingFragment StoreEntitySet="RoleModule">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="PlatformDBModel.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -1105,14 +1243,6 @@ warning 6002: The table/view 'PlatformDB.dbo.RoleModule' does not have a primary
                 <ScalarProperty Name="DataVal" ColumnName="DataVal" />
                 <ScalarProperty Name="DefaultVal" ColumnName="DefaultVal" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RoleModules">
-            <EntityTypeMapping TypeName="PlatformDBModel.RoleModule">
-              <MappingFragment StoreEntitySet="RoleModule">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
