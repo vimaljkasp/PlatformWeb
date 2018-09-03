@@ -61,6 +61,7 @@ namespace PlatformWeb.Controller
             return Ok();
         }
 
+        [Route("api/ProductOrders/{id}")]
         public void Delete(int id)
         {
         
