@@ -26,7 +26,7 @@ namespace Platform.Service
                 if (productOrderDtlDTO.OrderPrice > 0)
                     productOrderDetail.TotalPrice = productOrderDtlDTO.OrderPrice;
 
-                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.OrderStatus) == false)
+                if (string.IsNullOrWhiteSpace(productOrderDtlDTO.OrderStatus) == false )
                     productOrderDetail.OrderStatus = (int)((OrderStatus)Enum.Parse(typeof(OrderStatus), productOrderDtlDTO.OrderStatus));
 
                 if (string.IsNullOrWhiteSpace(productOrderDtlDTO.VehicleNumber) == false)
