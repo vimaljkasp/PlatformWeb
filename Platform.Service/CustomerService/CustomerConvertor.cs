@@ -24,7 +24,7 @@ namespace Platform.Service
             customerDto.State = customer.State;
             customerDto.PostalCode = customer.PostalCode;
             customerDto.GSTINNumber = customer.GSTINNumber;
-            customerDto.CustomerBalance = customer.CustomerWallets.FirstOrDefault().WalletBalance;
+            customerDto.CustomerBalance = customer.CustomerWallets.Select(w=>w.WalletBalance).FirstOrDefault();
             return customerDto;
 
 
