@@ -27,7 +27,7 @@ namespace PlatformWeb.Controller
         {
             try
             {
-                return Ok(_customerPaymentService.GetAllCustomerPayments());
+                return Ok(_customerPaymentService.GetAllCustomerOrders());
             }
             catch (PlatformModuleException ex)
             {
@@ -94,7 +94,7 @@ namespace PlatformWeb.Controller
         }
 
    //     [Authorize]
-        [Route("api/CustomerPayments/{id}")]
+        [Route("api/CustomerPayments/id/{id}")]
         public IHttpActionResult Delete(int id)
         {
             try

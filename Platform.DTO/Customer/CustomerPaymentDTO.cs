@@ -13,14 +13,20 @@ namespace Platform.DTO
     {
         public int CustomerPaymentId { get; set; }
         public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string ProductName { get; set; }
+        public string OrderNumber { get; set; }
+        public decimal PaidAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public int OrderId { get; set; }
         public decimal PaymentCrAmount { get; set; }
         public decimal PaymentDrAmount { get; set; }
         public System.DateTime PaymentDate { get; set; }
         public string PaymentReceivedBy { get; set; }
         public string PaymentComments { get; set; }
-        public string PaymentMode { get; set; }
+        public PaymentMode PaymentMode { get; set; }
         public string Ref2 { get; set; }
+
     }
 
     public class CustomerPaymentValidator : AbstractValidator<CustomerPaymentDTO>
@@ -36,5 +42,12 @@ namespace Platform.DTO
 
             //     RuleFor(x => x.Username).Length(8, 999).WithMessage("The user name must be at least 8 characters long.");
         }
+    }
+
+    public enum PaymentMode
+    {
+        Cash,
+        Cheque,
+        NEFT
     }
 }

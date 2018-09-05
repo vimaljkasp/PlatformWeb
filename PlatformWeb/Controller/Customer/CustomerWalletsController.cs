@@ -94,7 +94,7 @@ namespace PlatformWeb.Controller
         }
 
         [Authorize]
-        [Route("api/CustomerWallets/{id}")]
+        [Route("api/CustomerWallets/id/{id}")]
         public IHttpActionResult Delete(int id)
         {
             try

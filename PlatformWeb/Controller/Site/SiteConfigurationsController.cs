@@ -94,7 +94,7 @@ namespace PlatformWeb.Controller
         }
 
         [Authorize]
-        [Route("api/SiteConfigurations/{id}")]
+        [Route("api/SiteConfigurations/id/{id}")]
         public IHttpActionResult Delete(int id)
         {
             try

@@ -9,7 +9,7 @@ namespace Platform.Service
 {
     public interface ICustomerPaymentService
     {
-         List<CustomerPaymentDTO> GetAllCustomerPayments();
+         List<CustomerPaymentDTO> GetAllCustomerOrders();
 
         CustomerPaymentDTO GetCustomerPaymentById(int customerId);
 

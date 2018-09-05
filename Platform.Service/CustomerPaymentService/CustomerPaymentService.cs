@@ -69,15 +69,16 @@ namespace Platform.Service
             unitOfWork.SaveChanges();
         }
 
-        public List<CustomerPaymentDTO> GetAllCustomerPayments()
+        public List<CustomerPaymentDTO> GetAllCustomerOrders()
         {
             List<CustomerPaymentDTO> customerPaymentsList = new List<CustomerPaymentDTO>();
-            var customerPayments = unitOfWork.CustomerPaymentRepository.GetAll();
-            if (customerPayments != null)
+            var productOrders = unitOfWork.ProductOrderRepository.GetAll();
+            if (productOrders != null)
             {
-                foreach (var customerPayment in customerPayments)
+                foreach (var productOrder in productOrders)
                 {
-                    customerPaymentsList.Add(CustomerPaymentConvertor.ConvertToCustomerPaymentDto(customerPayment));
+                    if (productOrder.InActive == false || productOrder.InActive == null)
+                        customerPaymentsList.Add(CustomerPaymentConvertor.ConvertToCustomerPaymentDto(productOrder));
                 }
 
             }

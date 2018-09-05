@@ -21,11 +21,32 @@ namespace Platform.Service
             customerPaymentDTO.PaymentDate = customerPaymentTransaction.PaymentDate;
             customerPaymentDTO.PaymentReceivedBy = customerPaymentTransaction.PaymentReceivedBy;
             customerPaymentDTO.PaymentComments = customerPaymentTransaction.Ref1;
-            customerPaymentDTO.PaymentMode = customerPaymentTransaction.PaymentMode;
+            customerPaymentDTO.PaymentMode = (PaymentMode)Enum.Parse(typeof(PaymentMode), customerPaymentTransaction.PaymentMode);
             return customerPaymentDTO;
-       
+
+
+
 
     }
+
+        public static CustomerPaymentDTO ConvertToCustomerPaymentDto(ProductOrder productOrder)
+        {
+            CustomerPaymentDTO customerPaymentDTO = new CustomerPaymentDTO();
+          
+            customerPaymentDTO.CustomerId = productOrder.Customer.CustomerId;
+            customerPaymentDTO.CustomerName = productOrder.Customer.Name;
+            customerPaymentDTO.ProductName = productOrder.ProductOrderDetails.FirstOrDefault().ProductSiteMapping.Product.ProductName;
+            customerPaymentDTO.OrderNumber = productOrder.OrderNumber;
+            customerPaymentDTO.OrderId = productOrder.OrderId;
+            customerPaymentDTO.PaidAmount = productOrder.OrderPaidAmount.GetValueOrDefault();
+            customerPaymentDTO.TotalAmount = productOrder.OrderTotalPrice.GetValueOrDefault();
+
+            return customerPaymentDTO;
+
+        
+
+        }
+     
 
         public static void ConvertToCustomerPaymentEntity(ref CustomerPaymentTransaction customerPaymentTransaction, CustomerPaymentDTO customerPaymentDTO, bool isUpdate)
         {
@@ -39,7 +60,7 @@ namespace Platform.Service
             customerPaymentTransaction.PaymentDate = customerPaymentDTO.PaymentDate;
             customerPaymentTransaction.PaymentReceivedBy = customerPaymentDTO.PaymentReceivedBy;
             customerPaymentTransaction.Ref1 = customerPaymentDTO.PaymentComments;
-            customerPaymentTransaction.PaymentMode = customerPaymentDTO.PaymentMode;
+            customerPaymentTransaction.PaymentMode = customerPaymentDTO.PaymentMode.ToString();
           
 
 

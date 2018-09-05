@@ -30,7 +30,7 @@ namespace PlatformWeb.Controller
         }
 
 
-   
+        [Route("api/ProductOrders/{id}")]
         public ProductOrderDTO Get(int id)
         {
             return _productOrderService.GetProductOrderById(id);
@@ -51,7 +51,7 @@ namespace PlatformWeb.Controller
 
         //Put api/Customer/5
         [Route("api/ProductOrders/{id}")]
-        public IHttpActionResult Put(int customerid, [FromBody]ProductOrderDTO productOrderDTO)
+        public IHttpActionResult Put(int id, [FromBody]ProductOrderDTO productOrderDTO)
         {
             if (productOrderDTO == null)
                 return BadRequest("Argument Null");
@@ -61,7 +61,7 @@ namespace PlatformWeb.Controller
             return Ok();
         }
 
-        [Route("api/ProductOrders/{id}")]
+        [Route("api/ProductOrders/id/{id}")]
         public void Delete(int id)
         {
         

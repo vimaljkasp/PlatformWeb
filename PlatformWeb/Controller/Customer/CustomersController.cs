@@ -92,7 +92,7 @@ namespace PlatformWeb.Controller
             }
         }
 
-        [Route("api/customers/{id}")]
+        [Route("api/customers/id/{id}")]
         public IHttpActionResult Delete(int id)
         {
             try

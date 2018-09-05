@@ -30,7 +30,7 @@ namespace PlatformWeb.Controller
         }
 
 
-
+        [Route("api/ProductOrderDetails/{id}")]
         public ProductOrderDtlDTO Get(int id)
         {
             return _productOrderDtlService.GetProductOrderDtlById(id);
@@ -62,7 +62,7 @@ namespace PlatformWeb.Controller
             return Ok();
         }
 
-        [Route("api/ProductOrderDetails/{id}")]
+        [Route("api/ProductOrderDetails/id/{id}")]
         public void Delete(int id)
         {
 
