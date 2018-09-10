@@ -12,6 +12,7 @@ namespace Platform.Service
     {
         public static CustomerPaymentDTO ConvertToCustomerPaymentDto(CustomerPaymentTransaction customerPaymentTransaction)
         {
+
             CustomerPaymentDTO customerPaymentDTO = new CustomerPaymentDTO();
             customerPaymentDTO.CustomerPaymentId = customerPaymentTransaction.CustomerPaymentId;
             customerPaymentDTO.CustomerId = customerPaymentTransaction.CustomerId;
@@ -27,31 +28,46 @@ namespace Platform.Service
 
 
 
-    }
+        }
 
-        public static CustomerPaymentDTO ConvertToCustomerPaymentDto(ProductOrder productOrder)
+        public static CustomerPaymentDTO ConvertToCustomerPaymentDto(ProductOrder productOrder, List<CustomerPaymentTransaction> customerPayments)
         {
+            //TODO : Vimal please verify this logic whether we are showing sum of all order amount or single at a time for payments. 
+            // Means order payment can be done partially multiple time for single order or only one time ?
+            decimal? totalCrAmountOfOrder = customerPayments.Sum(x => x.PaymentCrAmount);
+            CustomerPaymentTransaction lastPaymentByCustomer = customerPayments.OrderByDescending(x => x.PaymentDate).FirstOrDefault();
+
             CustomerPaymentDTO customerPaymentDTO = new CustomerPaymentDTO();
-          
+
             customerPaymentDTO.CustomerId = productOrder.Customer.CustomerId;
             customerPaymentDTO.CustomerName = productOrder.Customer.Name;
             customerPaymentDTO.ProductName = productOrder.ProductOrderDetails.FirstOrDefault().ProductSiteMapping.Product.ProductName;
             customerPaymentDTO.OrderNumber = productOrder.OrderNumber;
             customerPaymentDTO.OrderId = productOrder.OrderId;
-            customerPaymentDTO.PaidAmount = productOrder.OrderPaidAmount.GetValueOrDefault();
+            customerPaymentDTO.PaidAmount = totalCrAmountOfOrder.Value;
             customerPaymentDTO.TotalAmount = productOrder.OrderTotalPrice.GetValueOrDefault();
+            customerPaymentDTO.PaymentCrAmount = totalCrAmountOfOrder.Value;
+            customerPaymentDTO.PaymentDate = lastPaymentByCustomer != null ? lastPaymentByCustomer.PaymentDate : DateTime.Now;
+            PaymentMode modeOfPay = PaymentMode.Cash;
+            if (lastPaymentByCustomer != null)
+                Enum.TryParse(lastPaymentByCustomer.PaymentMode, out modeOfPay);
+            customerPaymentDTO.PaymentMode = modeOfPay;
+            customerPaymentDTO.PaymentReceivedBy = lastPaymentByCustomer != null ? lastPaymentByCustomer.PaymentReceivedBy : "NA";
+            customerPaymentDTO.Ref2 = lastPaymentByCustomer != null ? lastPaymentByCustomer.Ref2 : "No Comments mentioned";
+            customerPaymentDTO.CustomerPaymentId = lastPaymentByCustomer != null ? lastPaymentByCustomer.CustomerPaymentId : 0;
+            customerPaymentDTO.PaymentComments = lastPaymentByCustomer != null ? lastPaymentByCustomer.Ref2 : "NA";
 
             return customerPaymentDTO;
 
-        
+
 
         }
-     
+
 
         public static void ConvertToCustomerPaymentEntity(ref CustomerPaymentTransaction customerPaymentTransaction, CustomerPaymentDTO customerPaymentDTO, bool isUpdate)
         {
-            if(isUpdate)
-            customerPaymentTransaction.CustomerPaymentId = customerPaymentDTO.CustomerPaymentId;
+            if (isUpdate)
+                customerPaymentTransaction.CustomerPaymentId = customerPaymentDTO.CustomerPaymentId;
 
             customerPaymentTransaction.CustomerId = customerPaymentDTO.CustomerId;
             customerPaymentTransaction.OrderId = customerPaymentDTO.OrderId;
@@ -61,7 +77,7 @@ namespace Platform.Service
             customerPaymentTransaction.PaymentReceivedBy = customerPaymentDTO.PaymentReceivedBy;
             customerPaymentTransaction.Ref1 = customerPaymentDTO.PaymentComments;
             customerPaymentTransaction.PaymentMode = customerPaymentDTO.PaymentMode.ToString();
-          
+
 
 
         }

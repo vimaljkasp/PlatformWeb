@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Platform.Service
 {
-    public class CustomerPaymentService : ICustomerPaymentService,IDisposable
+    public class CustomerPaymentService : ICustomerPaymentService, IDisposable
     {
-        private  UnitOfWork unitOfWork = new UnitOfWork();
+        private UnitOfWork unitOfWork = new UnitOfWork();
 
 
         public void AddCustomerPayment(CustomerPaymentDTO customerPaymentDTO)
@@ -22,7 +22,7 @@ namespace Platform.Service
             CustomerPaymentConvertor.ConvertToCustomerPaymentEntity(ref customerPaymentTransaction, customerPaymentDTO, false);
             unitOfWork.CustomerPaymentRepository.Add(customerPaymentTransaction);
             this.UpdateCustomerWallet(customerPaymentDTO);
-            
+
             this.UpdateAmountPaid(customerPaymentDTO);
             unitOfWork.SaveChanges();
         }
@@ -46,20 +46,20 @@ namespace Platform.Service
             if (customerWallet != null)
             {
                 customerWallet.WalletBalance -= customerPaymentDTO.PaymentCrAmount;
-                if(customerWallet.WalletBalance>0)
-                customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
+                if (customerWallet.WalletBalance > 0)
+                    customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
                 unitOfWork.CustomerWalletRepository.Update(customerWallet);
-               
+
             }
             else
             {
                 customerWallet = new CustomerWallet();
-                customerWallet.WalletId= unitOfWork.DashboardRepository.NextNumberGenerator("CustomerWallet");
+                customerWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerWallet");
                 customerWallet.CustomerId = customerPaymentDTO.CustomerId;
                 customerWallet.WalletBalance -= customerPaymentDTO.PaymentCrAmount;
                 customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
                 unitOfWork.CustomerWalletRepository.Add(customerWallet);
-              
+
             }
         }
 
@@ -75,12 +75,19 @@ namespace Platform.Service
             var productOrders = unitOfWork.ProductOrderRepository.GetAll();
             if (productOrders != null)
             {
+
+
+
                 foreach (var productOrder in productOrders)
                 {
                     if (productOrder.InActive == false || productOrder.InActive == null)
-                        customerPaymentsList.Add(CustomerPaymentConvertor.ConvertToCustomerPaymentDto(productOrder));
-                }
+                    {
+                        List<CustomerPaymentTransaction> customerPaymentTransactions = productOrder.Customer.CustomerPaymentTransactions.Where(x => x.OrderId == productOrder.OrderId).ToList<CustomerPaymentTransaction>();
 
+                        if (customerPaymentTransactions.Where(x => x.OrderId == productOrder.OrderId).Count() > 0)
+                            customerPaymentsList.Add(CustomerPaymentConvertor.ConvertToCustomerPaymentDto(productOrder, customerPaymentTransactions));
+                    }
+                }
             }
 
             return customerPaymentsList;
