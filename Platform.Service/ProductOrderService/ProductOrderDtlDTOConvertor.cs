@@ -27,6 +27,8 @@ namespace Platform.Service
             productOrderDtlDTO.Quantity = productOrderDetail.Quantity.GetValueOrDefault();
             productOrderDtlDTO.OrderPrice = productOrderDetail.ProductOrder.OrderPrice;
             productOrderDtlDTO.OrderTax = productOrderDetail.ProductOrder.OrderTax.GetValueOrDefault();
+            productOrderDtlDTO.CGSTTax = productOrderDetail.ProductOrder.CGSTTax.GetValueOrDefault();
+            productOrderDtlDTO.SGSTTax = productOrderDetail.ProductOrder.SGSTTax.GetValueOrDefault();
             productOrderDtlDTO.OrderDiscount = productOrderDetail.ProductOrder.OrderDiscount.GetValueOrDefault();
             productOrderDtlDTO.OrderAmountPaid = productOrderDetail.ProductOrder.OrderPaidAmount.GetValueOrDefault();
             productOrderDtlDTO.TotalPrice = productOrderDetail.ProductOrder.OrderTotalPrice.GetValueOrDefault();

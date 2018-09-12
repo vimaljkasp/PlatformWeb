@@ -15,6 +15,7 @@ namespace Platform.Service
 
         public void AddProductOrderDtl(ProductOrderDtlDTO productOrderDtlDTO)
         {
+            this.CalculateOrderAmount(productOrderDtlDTO);
             this.CalcualteOrderTax(productOrderDtlDTO);
             ProductOrderDetail productOrderDetail = unitOfWork.ProductOrderDtlRepository.GetById(productOrderDtlDTO.ProductOrderDetailId);
             if (productOrderDetail != null)
@@ -60,6 +61,8 @@ namespace Platform.Service
                 ProductOrder productOrder = unitOfWork.ProductOrderRepository.GetById(productOrderDtlDTO.OrderId);
                 productOrder.OrderPrice = productOrderDtlDTO.OrderPrice;
                 productOrder.OrderTax = productOrderDtlDTO.OrderTax;
+                productOrder.CGSTTax = productOrderDtlDTO.CGSTTax;
+                productOrder.SGSTTax = productOrderDtlDTO.SGSTTax;
                 productOrder.OrderDiscount = productOrderDtlDTO.OrderDiscount;
                 productOrder.OrderPaidAmount = productOrderDtlDTO.OrderAmountPaid;
                 productOrder.OrderTotalPrice = productOrderDtlDTO.TotalPrice - productOrderDtlDTO.OrderDiscount;
@@ -102,7 +105,8 @@ namespace Platform.Service
 
         public void UpdateProductOrderDtl(ProductOrderDtlDTO productOrderDtlDTO)
         {
-            if(productOrderDtlDTO.OrderPrice>0)
+            this.CalculateOrderAmount(productOrderDtlDTO);
+            if (productOrderDtlDTO.OrderPrice>0)
             this.CalcualteOrderTax(productOrderDtlDTO);
             ProductOrderDetail productOrderDetail = unitOfWork.ProductOrderDtlRepository.GetById(productOrderDtlDTO.ProductOrderDetailId);
             if (productOrderDetail != null)
@@ -148,6 +152,8 @@ namespace Platform.Service
                 ProductOrder productOrder = unitOfWork.ProductOrderRepository.GetById(productOrderDtlDTO.OrderId);
                 productOrder.OrderPrice = productOrderDtlDTO.OrderPrice;
                 productOrder.OrderTax = productOrderDtlDTO.OrderTax;
+                productOrder.CGSTTax = productOrderDtlDTO.CGSTTax;
+                productOrder.SGSTTax = productOrderDtlDTO.SGSTTax;
                 productOrder.OrderDiscount = productOrderDtlDTO.OrderDiscount;
                 productOrder.OrderPaidAmount = productOrderDtlDTO.OrderAmountPaid;
                 productOrder.OrderTotalPrice = productOrderDtlDTO.TotalPrice-productOrderDtlDTO.OrderDiscount;
@@ -166,16 +172,37 @@ namespace Platform.Service
             bool isTaxEnable = Convert.ToBoolean(unitOfWork.SiteConfigurationRepository.GetSiteConfigurationByKeyTypeAndKeyName("OrderTax", "IsEnable", "False"));
             if (isTaxEnable)
             {
-                decimal taxPrecentage = Convert.ToDecimal(unitOfWork.SiteConfigurationRepository.GetSiteConfigurationByKeyTypeAndKeyName("OrderTax", "Percentage", "7"));
-                productOrderDtlDTO.OrderTax = ((productOrderDtlDTO.OrderPrice * taxPrecentage) / (decimal)100.00);
+                decimal SGSTTaxPrecentage = Convert.ToDecimal(unitOfWork.SiteConfigurationRepository.GetSiteConfigurationByKeyTypeAndKeyName("OrderTax", "SGSTPercentage", "7"));
+                productOrderDtlDTO.SGSTTax = ((productOrderDtlDTO.OrderPrice * SGSTTaxPrecentage) / (decimal)100.00);
+                decimal CGSTTaxPrecentage = Convert.ToDecimal(unitOfWork.SiteConfigurationRepository.GetSiteConfigurationByKeyTypeAndKeyName("OrderTax", "CGSTPercentage", "7"));
+                productOrderDtlDTO.CGSTTax = ((productOrderDtlDTO.OrderPrice * CGSTTaxPrecentage) / (decimal)100.00);
+
             }
             else
             {
-                productOrderDtlDTO.OrderTax = 0;
+                productOrderDtlDTO.SGSTTax = 0;
+                productOrderDtlDTO.CGSTTax = 0;
+
+
 
             }
-
+            productOrderDtlDTO.OrderTax = productOrderDtlDTO.SGSTTax+ productOrderDtlDTO.CGSTTax;
             productOrderDtlDTO.TotalPrice = (productOrderDtlDTO.OrderPrice + productOrderDtlDTO.OrderTax);
+        }
+
+        private void CalculateOrderAmount(ProductOrderDtlDTO productOrderDtlDTO)
+        {
+            if (productOrderDtlDTO.Quantity > 0 && productOrderDtlDTO.ProductMappingId>0)
+            {
+                decimal productUnitPrice = unitOfWork.ProductSiteMappingRepository.GetById(productOrderDtlDTO.ProductMappingId).Product.ProductPrice.GetValueOrDefault();
+                productOrderDtlDTO.OrderPrice = productUnitPrice * productOrderDtlDTO.Quantity;
+            }
+            else
+            {
+                productOrderDtlDTO.OrderPrice = 0;
+            }
+
+
         }
 
         private void AddOrUpdateProductSales(ProductOrderDtlDTO productOrderDtlDTO)

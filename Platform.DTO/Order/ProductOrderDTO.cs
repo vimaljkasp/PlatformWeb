@@ -32,6 +32,8 @@ namespace Platform.DTO
         public DateTime OrderDate { get; set; }
         public decimal OrderTotalPrice { get; set; }
         public decimal OrderTax { get; set; }
+        public decimal CGSTTax { get; set; }
+        public decimal SGSTTax { get; set; }
         public decimal OrderPrice { get; set; }
         public decimal OrderDiscount { get; set; }
         public string OrderPriority { get; set; }

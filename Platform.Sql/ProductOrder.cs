@@ -38,6 +38,8 @@ namespace Platform.Sql
         public Nullable<System.DateTime> ModifiedDtm { get; set; }
         public Nullable<bool> InActive { get; set; }
         public Nullable<decimal> OrderPaidAmount { get; set; }
+        public Nullable<decimal> CGSTTax { get; set; }
+        public Nullable<decimal> SGSTTax { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

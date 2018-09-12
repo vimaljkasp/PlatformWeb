@@ -52,8 +52,15 @@ namespace Platform.Service
             Customer customer = new Customer();
             customer.CustomerId = unitOfWork.DashboardRepository.NextNumberGenerator("Customer");
             CustomerConvertor.ConvertToCustomerEntity(ref customer, customerDto, false);
-            
             unitOfWork.CustomerRepository.Add(customer);
+            //creating customer wallet with customer 
+            CustomerWallet customerWallet = new CustomerWallet();
+            customerWallet.WalletId = unitOfWork.DashboardRepository.NextNumberGenerator("CustomerWallet");
+            customerWallet.CustomerId = customer.CustomerId;
+            customerWallet.WalletBalance = 0;
+            customerWallet.AmountDueDate = DateTime.Now.AddDays(10);
+            unitOfWork.CustomerWalletRepository.Add(customerWallet);
+           
             unitOfWork.SaveChanges();
            
             
@@ -79,6 +86,13 @@ namespace Platform.Service
         public void DeleteCustomer(int id)
         {
             UnitOfWork unitOfWork = new UnitOfWork();
+            //get customer
+            var customer = unitOfWork.CustomerRepository.GetById(id);
+            if((customer.ProductOrders !=null && customer.ProductOrders.Count()>0) || (customer.CustomerWallets !=null && 
+                customer.CustomerWallets.Count()>0 && customer.CustomerWallets.FirstOrDefault().WalletBalance>0))
+                {
+                throw new PlatformModuleException("Customer Account Cannot be deleted as it is associated with orders");
+            }
             unitOfWork.CustomerRepository.Delete(id);
             unitOfWork.SaveChanges();
   

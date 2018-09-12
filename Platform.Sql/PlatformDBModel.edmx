@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PlatformDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -155,6 +155,8 @@
           <Property Name="ModifiedDtm" Type="datetime" />
           <Property Name="InActive" Type="bit" />
           <Property Name="OrderPaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CGSTTax" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SGSTTax" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrderDetail">
           <Key>
@@ -473,8 +475,7 @@
             <End Role="ProductSales" EntitySet="ProductSales" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlatformDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -641,6 +642,8 @@
           <Property Name="OrderPaidAmount" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Customer" Relationship="Self.fk_ProductOrder_CustomerId" FromRole="ProductOrder" ToRole="Customer" />
           <NavigationProperty Name="ProductOrderDetails" Relationship="Self.fk_ProductOrderDetail_ProductOrder" FromRole="ProductOrder" ToRole="ProductOrderDetail" />
+          <Property Name="CGSTTax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SGSTTax" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrderDetail">
           <Key>
@@ -1117,6 +1120,8 @@
           <EntitySetMapping Name="ProductOrders">
             <EntityTypeMapping TypeName="PlatformDBModel.ProductOrder">
               <MappingFragment StoreEntitySet="ProductOrder">
+                <ScalarProperty Name="SGSTTax" ColumnName="SGSTTax" />
+                <ScalarProperty Name="CGSTTax" ColumnName="CGSTTax" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
                 <ScalarProperty Name="OrderPurchaseDtm" ColumnName="OrderPurchaseDtm" />

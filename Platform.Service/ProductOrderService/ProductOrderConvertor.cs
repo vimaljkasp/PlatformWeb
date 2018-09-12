@@ -28,6 +28,8 @@ namespace Platform.Service
             productOrderDTO.OrderCustomerId = productOrder.OrderCustomerId.GetValueOrDefault();
             productOrderDTO.OrderPrice = productOrder.OrderPrice;
             productOrderDTO.OrderTax =productOrder.OrderTax.GetValueOrDefault();
+            productOrderDTO.CGSTTax = productOrder.CGSTTax.GetValueOrDefault();
+            productOrderDTO.SGSTTax = productOrder.SGSTTax.GetValueOrDefault();
             productOrderDTO.OrderTotalPrice = productOrder.OrderTotalPrice.GetValueOrDefault();
             productOrderDTO.OrderPriority = productOrder.OrderPriority;
             productOrderDTO.OrderComments = productOrder.OrderComments;
