@@ -13,6 +13,8 @@ namespace Platform.Service
 
         CustomerPaymentDTO GetCustomerPaymentById(int customerId);
 
+        decimal? GetDuePaymentByOrderId(int orderId);
+        
         void AddCustomerPayment(CustomerPaymentDTO customerPaymentDTO);
 
         void UpdateCustomerPayment(CustomerPaymentDTO customerPaymentDTO);

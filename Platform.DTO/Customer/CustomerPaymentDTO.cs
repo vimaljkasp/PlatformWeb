@@ -25,6 +25,9 @@ namespace Platform.DTO
         public string PaymentReceivedBy { get; set; }
         public string PaymentComments { get; set; }
         public PaymentMode PaymentMode { get; set; }
+
+        public String OrderStatus { get; set; }
+
         public string Ref2 { get; set; }
 
     }

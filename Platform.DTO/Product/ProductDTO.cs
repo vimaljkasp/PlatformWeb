@@ -21,6 +21,9 @@ namespace Platform.DTO
         public bool IsActive { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
+
+        public decimal CGST { get; set; }
+        public decimal SGST { get; set; }
     }
 
     public class ProductValidator : AbstractValidator<ProductDTO>

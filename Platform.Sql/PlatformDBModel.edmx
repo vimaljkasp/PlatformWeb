@@ -132,6 +132,8 @@
           <Property Name="IsActive" Type="bit" />
           <Property Name="Ref1" Type="nvarchar" MaxLength="50" />
           <Property Name="Ref2" Type="nvarchar" MaxLength="50" />
+          <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrder">
           <Key>
@@ -617,6 +619,8 @@
           <Property Name="Ref1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Ref2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductSiteMappings" Relationship="Self.fk_ProductSiteMapping_Product" FromRole="Product" ToRole="ProductSiteMapping" />
+          <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrder">
           <Key>
@@ -1105,6 +1109,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="PlatformDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CGST" ColumnName="CGST" />
+                <ScalarProperty Name="SGST" ColumnName="SGST" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />

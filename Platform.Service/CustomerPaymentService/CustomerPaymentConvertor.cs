@@ -35,7 +35,7 @@ namespace Platform.Service
             //TODO : Vimal please verify this logic whether we are showing sum of all order amount or single at a time for payments. 
             // Means order payment can be done partially multiple time for single order or only one time ?
             decimal? totalCrAmountOfOrder = customerPayments.Sum(x => x.PaymentCrAmount);
-            CustomerPaymentTransaction lastPaymentByCustomer = customerPayments.OrderByDescending(x => x.PaymentDate).FirstOrDefault();
+            CustomerPaymentTransaction lastPaymentByCustomer = customerPayments.OrderByDescending(x => x.CustomerPaymentId).FirstOrDefault();
 
             CustomerPaymentDTO customerPaymentDTO = new CustomerPaymentDTO();
 
@@ -53,10 +53,10 @@ namespace Platform.Service
                 Enum.TryParse(lastPaymentByCustomer.PaymentMode, out modeOfPay);
             customerPaymentDTO.PaymentMode = modeOfPay;
             customerPaymentDTO.PaymentReceivedBy = lastPaymentByCustomer != null ? lastPaymentByCustomer.PaymentReceivedBy : "NA";
-            customerPaymentDTO.Ref2 = lastPaymentByCustomer != null ? lastPaymentByCustomer.Ref2 : "No Comments mentioned";
+            customerPaymentDTO.Ref2 = lastPaymentByCustomer != null ? lastPaymentByCustomer.Ref2 : "NA";
             customerPaymentDTO.CustomerPaymentId = lastPaymentByCustomer != null ? lastPaymentByCustomer.CustomerPaymentId : 0;
-            customerPaymentDTO.PaymentComments = lastPaymentByCustomer != null ? lastPaymentByCustomer.Ref2 : "NA";
-
+            customerPaymentDTO.PaymentComments = lastPaymentByCustomer != null ? lastPaymentByCustomer.Ref1 : "No Comments mentioned";
+            customerPaymentDTO.OrderStatus = productOrder.ProductOrderDetails.FirstOrDefault().OrderStatus.ToString();
             return customerPaymentDTO;
 
 

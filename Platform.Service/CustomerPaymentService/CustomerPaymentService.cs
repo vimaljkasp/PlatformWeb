@@ -24,7 +24,22 @@ namespace Platform.Service
             this.UpdateCustomerWallet(customerPaymentDTO);
 
             this.UpdateAmountPaid(customerPaymentDTO);
+
+            this.UpdateOrderStatus(customerPaymentDTO);
             unitOfWork.SaveChanges();
+        }
+
+        private void UpdateOrderStatus(CustomerPaymentDTO customerPaymentDTO)
+        {
+            if (customerPaymentDTO.OrderId > 0)
+            {
+                var productOrder = unitOfWork.ProductOrderDtlRepository.GetByOrderId(customerPaymentDTO.OrderId);
+                if (productOrder != null)
+                {
+                    productOrder.OrderStatus = Convert.ToInt16(customerPaymentDTO.OrderStatus);
+                    unitOfWork.ProductOrderDtlRepository.Update(productOrder);
+                }
+            }
         }
 
         private void UpdateAmountPaid(CustomerPaymentDTO customerPaymentDTO)
@@ -76,8 +91,6 @@ namespace Platform.Service
             if (productOrders != null)
             {
 
-
-
                 foreach (var productOrder in productOrders)
                 {
                     if (productOrder.InActive == false || productOrder.InActive == null)
@@ -102,6 +115,16 @@ namespace Platform.Service
                 customerPaymentDTO = CustomerPaymentConvertor.ConvertToCustomerPaymentDto(customerPayment);
             }
             return customerPaymentDTO;
+        }
+
+        public decimal? GetDuePaymentByOrderId(int orderId)
+        {
+            List<CustomerPaymentTransaction> customerPaymentTransactions = unitOfWork.CustomerPaymentRepository.GetAll().Where(x => x.OrderId == orderId).ToList();
+            decimal? totalDueAmt = 0;
+            decimal? totalDrAmt = customerPaymentTransactions.Sum(x => x.PaymentDrAmount).Value;
+            decimal? totalCrAmt = customerPaymentTransactions.Sum(x => x.PaymentCrAmount).Value;
+            totalDueAmt = totalDrAmt - totalCrAmt;
+            return totalDueAmt;
         }
 
         public void UpdateCustomerPayment(CustomerPaymentDTO customerPaymentDTO)

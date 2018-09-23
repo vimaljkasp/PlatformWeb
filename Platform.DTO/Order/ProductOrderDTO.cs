@@ -58,7 +58,19 @@ namespace Platform.DTO
 
     public enum OrderStatus
     {
-        Pending = 0,
-        Completed
+        //When order created
+        New,
+
+        //When Order Delivered
+        Delivered,
+
+        //When partial payment made for order
+        PaymentDue,
+
+        //When payment settled.
+        Complete,
+
+        //canceled by user
+        Cancel
     }
 }

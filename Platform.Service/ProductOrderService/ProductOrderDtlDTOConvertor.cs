@@ -21,9 +21,8 @@ namespace Platform.Service
             productOrderDtlDTO.OrderNumber = productOrderDetail.ProductOrder.OrderNumber;
             productOrderDtlDTO.ProductMappingId = productOrderDetail.ProductMappingId.GetValueOrDefault();
             productOrderDtlDTO.ProductName = productOrderDetail.ProductSiteMapping.Product.ProductName;
-
-
-
+            productOrderDtlDTO.UnitPrice = productOrderDetail.ProductSiteMapping.Product.ProductPrice.HasValue ? productOrderDetail.ProductSiteMapping.Product.ProductPrice.Value : 0;
+            
             productOrderDtlDTO.Quantity = productOrderDetail.Quantity.GetValueOrDefault();
             productOrderDtlDTO.OrderPrice = productOrderDetail.ProductOrder.OrderPrice;
             productOrderDtlDTO.OrderTax = productOrderDetail.ProductOrder.OrderTax.GetValueOrDefault();
@@ -80,11 +79,11 @@ namespace Platform.Service
 
             }
             productOrderDetail.OrderStatus = (int)((OrderStatus)Enum.Parse(typeof(OrderStatus), productOrderDtlDTO.OrderStatus));
-  
+
             productOrderDetail.Ref1 = productOrderDtlDTO.Ref1;
             productOrderDetail.Ref2 = productOrderDtlDTO.Ref2;
 
 
-    }
+        }
     }
 }

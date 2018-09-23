@@ -51,8 +51,26 @@ namespace PlatformWeb.Controller
             }
         }
 
+        /// <summary>
+        /// This web api will give us all payment details against that order Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/CustomerPayments/OrderDue/{id}")]
+        public IHttpActionResult GetDuePaymentByOrderId(int id)
+        {
+            try
+            {
+                return Ok(_customerPaymentService.GetDuePaymentByOrderId(id));
+            }
+            catch (PlatformModuleException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-     //   [Authorize]
+
+        //   [Authorize]
         public IHttpActionResult Post([FromBody]CustomerPaymentDTO customerPaymentDTO)
         {
             try

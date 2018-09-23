@@ -37,7 +37,6 @@ namespace PlatformWeb.Controller
         }
 
 
-        [Authorize]
         [Route("api/Products/{id}")]
         public IHttpActionResult Get(int id)
         {
@@ -52,7 +51,6 @@ namespace PlatformWeb.Controller
         }
 
 
-        [Authorize]
         public IHttpActionResult Post([FromBody]ProductDTO productDTO)
         {
             try
@@ -72,7 +70,6 @@ namespace PlatformWeb.Controller
         }
 
 
-        [Authorize]
         [Route("api/Products/{id}")]
         public IHttpActionResult Put(int id, [FromBody]ProductDTO productDTO)
         {
@@ -93,7 +90,6 @@ namespace PlatformWeb.Controller
             }
         }
 
-        [Authorize]
         [Route("api/Products/id/{id}")]
         public IHttpActionResult Delete(int id)
         {

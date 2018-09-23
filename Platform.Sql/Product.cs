@@ -29,6 +29,8 @@ namespace Platform.Sql
         public Nullable<bool> IsActive { get; set; }
         public string Ref1 { get; set; }
         public string Ref2 { get; set; }
+        public Nullable<decimal> SGST { get; set; }
+        public Nullable<decimal> CGST { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductSiteMapping> ProductSiteMappings { get; set; }
